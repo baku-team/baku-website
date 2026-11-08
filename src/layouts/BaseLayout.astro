@@ -1,5 +1,6 @@
 ---
 import '../styles/site.css';
+import '../styles/motion.css';
 
 interface Props {
   title: string;
@@ -49,5 +50,8 @@ const ogImageURL = new URL(ogImagePath, Astro.site).toString();
 </head>
 <body>
 <slot />
+<script>
+  import '../scripts/motion.js';
+</script>
 </body>
 </html>

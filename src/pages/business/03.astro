@@ -5,113 +5,75 @@ import BusinessLayout from '../../layouts/BusinessLayout.astro';
   index="03"
   kanji="参"
   chapter="Chapter Three"
-  enTitle="Supervision & Consulting"
-  jaTitle="監修・コンサルティング仲介"
-  lead="貘と業務提携する獣医師・専門家の知見を、企業の商品開発と社会実装へと橋渡しする。"
+  enTitle="Event Management"
+  jaTitle="イベントの運営管理"
+  bridge={['イベンター', '依頼主']}
+  lead="イベントを形にできる人と、開きたい人をつなぐ。"
   tone="light"
-  title="監修・コンサルティング仲介事業 | 合同会社 貘"
-  description="合同会社 貘は、業務提携契約を結ぶ獣医師・専門家のネットワークを背景に、企業の商品開発に対する学術的監修を仲介します。"
+  title="イベントの運営管理 | 合同会社 貘"
+  description="合同会社 貘は、イベントを開きたい企業・団体と、企画・運営ができるイベンターのあいだに立ちます。申込・名簿・連絡・経費の管理はAIの電子秘書REVERSEで行い、窓口を貘がひとつにまとめます。"
 >
   <div class="container">
 
     <section class="block reveal">
       <span class="block-eyebrow">— Overview —</span>
-      <h3 class="block-title">貘の獣医師ネットワーク</h3>
+      <h3 class="block-title">イベンターと<wbr>依頼主のあいだに<wbr>立つ</h3>
       <p>
-        合同会社 貘は、業務提携契約を交わした獣医師・専門家のネットワークを背景に、
-        企業が動物・環境配慮型商品を開発する際の専門的監修を仲介します。
-        提携先には現役の獣医師、動物医療の臨床家、大学・研究機関の研究者などが含まれます。
+        イベントを<wbr>開きたい企業・団体と、企画や当日の<wbr>運営ができるイベンター。
+        合同会社 貘は、その<wbr>両者をおつなぎし、依頼の<wbr>受付から当日まで、窓口をひとつにまとめます。
+      </p>
+      <p>
+        申込の<wbr>受付や名簿、参加者との<wbr>連絡、経費の<wbr>精算といった事務は、
+        当社が<wbr>提供するAIの<wbr>電子秘書「REVERSE」で<wbr>管理します。
+        イベンターは<wbr>企画と<wbr>当日の<wbr>運営に、依頼主は<wbr>イベントの<wbr>中身に<wbr>集中できます。
       </p>
     </section>
 
     <section class="block reveal">
-      <span class="block-eyebrow">— Structure —</span>
-      <h3 class="block-title">提携スキーム</h3>
-      <ol class="bullets">
-        <li><strong>合同会社 貘</strong>： 企業からの監修依頼を受け、最適な専門家をアサイン。</li>
-        <li><strong>提携獣医師・専門家</strong>： 貘との業務提携契約に基づき、案件単位で監修業務を担当。</li>
-        <li><strong>クライアント企業</strong>： 一元窓口を通じて、複数領域の専門家にアクセス。</li>
-      </ol>
-      <p class="muted">※ 専門家のなかには関連学術団体の理事を兼任する者も含まれますが、契約関係は常に貘との間で完結し、本業との利益相反が生じない設計としています。</p>
-    </section>
-
-    <section class="block reveal">
-      <span class="block-eyebrow">— Domains —</span>
-      <h3 class="block-title">監修領域</h3>
+      <span class="block-eyebrow">— With REVERSE —</span>
+      <h3 class="block-title">REVERSEで<wbr>管理すること</h3>
       <div class="pillgrid">
         <div class="pill">
-          <span class="label">Animal Welfare</span>
-          ペットフード／ケア用品の成分・栄養・安全性レビュー
+          <span class="label">Entry</span>
+          <strong>申込ページ</strong><br />
+          ログインなしで<wbr>申し込めるページ。定員と<wbr>キャンセル待ちにも<wbr>対応。
         </div>
         <div class="pill">
-          <span class="label">Hygiene</span>
-          動物施設・医療機関向け衛生管理プロトコル監修
+          <span class="label">Roster</span>
+          <strong>名簿と<wbr>人数の<wbr>集計</strong><br />
+          枠ごとの<wbr>人数や、定員まであと<wbr>何人かをすぐに<wbr>確認。
         </div>
         <div class="pill">
-          <span class="label">Environment</span>
-          環境配慮型素材・サプライチェーンに関する助言
+          <span class="label">Contact</span>
+          <strong>問い合わせへの<wbr>返事</strong><br />
+          AIが<wbr>返事の<wbr>文面を<wbr>用意し、担当者が<wbr>確かめてから送信。
         </div>
         <div class="pill">
-          <span class="label">Education</span>
-          飼育者向け学習コンテンツの学術監修
+          <span class="label">Expenses</span>
+          <strong>経費の<wbr>記録と<wbr>精算</strong><br />
+          レシートの<wbr>記帳と、参加人数に<wbr>応じた按分。
         </div>
       </div>
+      <p class="muted">※ いずれも<wbr>当社の<wbr>環境で、動作を<wbr>確かめた業務です。</p>
     </section>
 
     <section class="block reveal">
       <span class="block-eyebrow">— Process —</span>
-      <h3 class="block-title">監修プロセス</h3>
+      <h3 class="block-title">進め方</h3>
       <ol class="bullets">
-        <li>企業からの企画概要・監修要件のヒアリング</li>
-        <li>提携専門家のマッチング、契約条件の調整</li>
-        <li>専門家による監修実務（書類・現地・実機）</li>
-        <li>監修報告書の納品、認証マーク等の運用設計</li>
-        <li>市場導入後のフォローアップとアップデート</li>
+        <li>開きたいイベントの<wbr>内容・時期・規模をうかがう</li>
+        <li>内容に<wbr>合うイベンターをご紹介し、条件を<wbr>調整する</li>
+        <li>申込・名簿・連絡・経費を<wbr>REVERSEで<wbr>管理しながら、当日まで<wbr>進める</li>
+        <li>終了後のご報告と<wbr>精算</li>
       </ol>
-    </section>
-
-    <section class="block reveal">
-      <span class="block-eyebrow">— Value —</span>
-      <h3 class="block-title">提供価値</h3>
-      <div class="twocol">
-        <div>
-          <span class="block-eyebrow" style="color:var(--brass);">For Companies</span>
-          <ul class="bullets" style="margin-top:14px;">
-            <li>学術的裏付けによる商品信頼性の向上</li>
-            <li>専門家ネットワークへのワンストップアクセス</li>
-            <li>動物倫理・サステナビリティ訴求の強化</li>
-          </ul>
-        </div>
-        <div>
-          <span class="block-eyebrow" style="color:var(--brass);">For Experts</span>
-          <ul class="bullets" style="margin-top:14px;">
-            <li>本業と独立した、安定的な収益機会の創出</li>
-            <li>研究知見・臨床知見の社会実装機会の獲得</li>
-            <li>専門家ネットワークの拡張と相互連携</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="block reveal">
-      <span class="block-eyebrow">— Fee Model —</span>
-      <h3 class="block-title">監修フィー</h3>
-      <dl class="kv">
-        <dt>Spot</dt>
-        <dd>単発監修：案件規模に応じた個別見積</dd>
-        <dt>Retainer</dt>
-        <dd>継続顧問：月額契約／開発フェーズ並走</dd>
-        <dt>Brokerage</dt>
-        <dd>仲介手数料：契約規模に応じた個別設定</dd>
-      </dl>
-      <p class="muted">※ 実際の条件は監修対象・期間・関係者数を踏まえご相談のうえ決定いたします。</p>
+      <p class="muted">※ 費用は、イベントの<wbr>内容と<wbr>規模に<wbr>応じてご相談のうえお見積りします。</p>
     </section>
 
     <section class="block reveal">
       <span class="block-eyebrow">— Contact —</span>
-      <h3 class="block-title">ご相談窓口</h3>
+      <h3 class="block-title">イベントのご依頼・イベンターの<wbr>方のご相談</h3>
       <p>
-        商品開発における監修のご相談、専門家アサインのご依頼は下記までお問い合わせください。
+        イベントの<wbr>開催のご依頼、イベンターとしての<wbr>参加のご相談は<wbr>下記までご連絡ください。
       </p>
       <p>
         <a class="contact-link" href="mailto:baku@baku-llc.co.jp" style="color:inherit;border-bottom:1px solid var(--brass);">baku@baku-llc.co.jp</a>

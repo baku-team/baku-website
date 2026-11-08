@@ -2,12 +2,14 @@
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {
-  index: '01' | '02' | '03' | '04' | '05';
+  index: '01' | '02' | '03' | '04' | '05' | '06';
   kanji: string;
   chapter: string;
   enTitle: string;
   jaTitle: string;
   lead: string;
+  /** the two parties 貘 stands between, e.g. ['権利者', '企業'] */
+  bridge: [string, string];
   tone?: 'light' | 'ink';
   title: string;
   description: string;
@@ -20,14 +22,16 @@ const {
   enTitle,
   jaTitle,
   lead,
+  bridge,
   tone = 'light',
   title,
   description,
 } = Astro.props;
 
-const next = String(Math.min(5, Number(index) + 1)).padStart(2, '0');
+const TOTAL = 3; // 公開中の事業の数（非表示の事業は pages/business/_hidden-*.astro）
+const next = String(Math.min(TOTAL, Number(index) + 1)).padStart(2, '0');
 const prev = String(Math.max(1, Number(index) - 1)).padStart(2, '0');
-const hasNext = Number(index) < 5;
+const hasNext = Number(index) < TOTAL;
 const hasPrev = Number(index) > 1;
 ---
 <BaseLayout
@@ -49,8 +53,8 @@ const hasPrev = Number(index) > 1;
 
   <main>
     <!-- Sub-page hero banner -->
-    <section class={`biz-hero ${tone}`} aria-labelledby="biz-detail-heading">
-      <span class="anchor">§ Business / {index} ・ 05</span>
+    <section class={`biz-hero ${tone}`} aria-labelledby="biz-detail-heading" data-clouds data-motes={tone === 'ink' ? '' : undefined}>
+      <span class="anchor">§ Business / {index} ・ {String(TOTAL).padStart(2, "0")}</span>
       <span class="anchor right"><a class="back-link" href="/#business">← Back to Index</a></span>
       <div class="frame">
         <div class="num" aria-hidden="true">{kanji}</div>
@@ -58,6 +62,7 @@ const hasPrev = Number(index) > 1;
           <div class="reveal index">— {chapter} —</div>
           <h1 class="reveal d1 en-title" id="biz-detail-heading">{enTitle}</h1>
           <h2 class="reveal d2 ja-title">{jaTitle}</h2>
+          <p class="reveal d3 bridge"><span>{bridge[0]}</span><b>貘</b><span>{bridge[1]}</span></p>
           <p class="reveal d3 lead">{lead}</p>
         </div>
       </div>
@@ -104,6 +109,7 @@ const hasPrev = Number(index) > 1;
         <a href="/#mission">Mission</a>
         <a href="/#business">Business</a>
         <a href="/#company">Company</a>
+        <a href="https://reverse-lp.pages.dev/">REVERSE ↗</a>
       </div>
       <div class="col">
         <h6>Contact</h6>

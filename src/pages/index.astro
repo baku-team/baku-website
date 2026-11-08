@@ -8,14 +8,26 @@ const orgJsonLd = {
   alternateName: 'Baku LLC',
   url: 'https://baku-llc.co.jp/',
   logo: 'https://baku-llc.co.jp/assets/logo_icon.jpg',
-  foundingDate: '2026',
+  foundingDate: '2026-10',
   email: 'baku@baku-llc.co.jp',
+  address: {
+    '@type': 'PostalAddress',
+    postalCode: '140-0001',
+    addressRegion: '東京都',
+    addressLocality: '品川区',
+    streetAddress: '北品川四丁目11-8 春雨寺1階',
+    addressCountry: 'JP',
+  },
 };
+
+// 非表示中の事業（島の動物診療・営業代行・取次・監修）。出すときは true にし、
+// pages/business/_hidden-*.astro の名前と番号、BusinessLayout の TOTAL も直す。
+const SHOW_HIDDEN = false;
 ---
 <BaseLayout
   title="合同会社 貘 | Baku LLC"
-  description="文化と事業を、つなぐ。合同会社 貘は、IPライセンス・広告代理・監修・イベント・Web/アプリ開発を横断し、想いの種を、事業として社会に届けます。"
-  ogDescription="文化と事業を、つなぐ。"
+  description="合同会社 貘は、権利・技術・知見を持つ人と、それを求める事業者のあいだに立つ管理会社です。IPライセンス、AIの電子秘書「REVERSE」、イベントの運営管理の事業で、契約や窓口、日々の運営を引き受けます。"
+  ogDescription="持つ人と、求める人を、つなぐ。"
 >
   <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(orgJsonLd)} />
 
@@ -45,14 +57,14 @@ const orgJsonLd = {
   </section>
 
   <!-- §2 About -->
-  <section id="about" class="about" aria-labelledby="about-heading">
+  <section id="about" class="about" aria-labelledby="about-heading" data-moon data-waves="paper">
     <span class="anchor">§ 02 — About</span>
     <h2 id="about-heading" class="copy reveal d1">
-      <span class="nowrap">文化と事業を、</span><span class="nowrap"><em>つなぐ</em>。</span>
+      <span class="nowrap">持つ人と、</span><span class="nowrap">求める人を、</span><span class="nowrap"><em>つなぐ</em>。</span>
     </h2>
     <p class="sub reveal d3">
-      <span class="nowrap">合同会社 貘は、</span><span class="nowrap">知財・流通・監修・</span><span class="nowrap">場づくりを横断し、</span><br class="br-pc" />
-      <span class="nowrap">想いの種を、</span><span class="nowrap">事業として</span><span class="nowrap">社会に届けます。</span>
+      <span class="nowrap">合同会社 貘は、</span><span class="nowrap">権利・技術・知見を持つ人と、</span><br class="br-pc" />
+      <span class="nowrap">それを求める事業者の</span><span class="nowrap">あいだに立つ</span><span class="nowrap">管理会社です。</span>
     </p>
   </section>
 
@@ -61,26 +73,38 @@ const orgJsonLd = {
   </div>
 
   <!-- §3 Mission -->
-  <section id="mission" class="mission ink" aria-labelledby="mission-heading">
+  <section id="mission" class="mission ink" aria-labelledby="mission-heading" data-motes data-waves="ink">
     <span class="anchor">§ 03 — Mission</span>
     <div class="reveal"><span class="eyebrow" id="mission-heading">Our Mission</span></div>
     <div class="rule-v reveal d1" aria-hidden="true"></div>
 
     <div class="lines">
-      <p class="reveal d4"><span class="nowrap">私たちは、</span><span class="nowrap">想いを引き受け、</span><span class="nowrap"><em>事業</em>として</span><span class="nowrap">お返しします。</span></p>
+      <p class="reveal d2"><span class="nowrap">つなぐための<em>実務</em>を、</span><br /><span class="nowrap">引き受ける。</span></p>
+      <p class="reveal d4 body">
+        <span class="nowrap">契約、権利の管理、</span><span class="nowrap">窓口、日々の運営。</span><br class="br-pc" />
+        <span class="nowrap">あいだで生まれる手間を</span><span class="nowrap">貘が受け持つことで、</span><br class="br-pc" />
+        <span class="nowrap">持つ人は本業に、</span><span class="nowrap">求める人は使うことに</span><span class="nowrap">集中できます。</span>
+      </p>
     </div>
 
-    <div class="seal reveal d6" aria-hidden="true">貘</div>
+    <div class="emblem" aria-hidden="true">
+      <svg class="emblem-ring" viewBox="0 0 200 200">
+        <defs><path id="emblem-path" d="M100,100 m-86,0 a86,86 0 1,1 172,0 a86,86 0 1,1 -172,0" /></defs>
+        <circle cx="100" cy="100" r="96" />
+        <text><textPath href="#emblem-path">BAKU LLC · MANAGEMENT · TOKYO · ESTABLISHED 2026 ·</textPath></text>
+      </svg>
+      <div class="disc"><img src="/assets/emblem.webp" alt="" width="720" height="720" loading="lazy" decoding="async" /></div>
+    </div>
   </section>
 
   <div class="band-divider band-divider--paper" aria-hidden="true">
     <span class="divider"><span>Business</span></span>
   </div>
 
-  <!-- §4 Business 01 -->
-  <section id="business" class="biz light" aria-labelledby="biz1-heading">
+  <!-- §4 Business 01 : IP -->
+  <section id="business" class="biz light" data-clouds aria-labelledby="biz1-heading">
     <span class="anchor">§ 04 — Business</span>
-    <span class="anchor right">01 / 05</span>
+    <span class="anchor right">01 / 03</span>
     <a class="biz-link" href="/business/01/" aria-label="IPライセンス事業の詳細ページへ">
       <div class="frame">
         <div class="num" aria-hidden="true">壱</div>
@@ -88,11 +112,12 @@ const orgJsonLd = {
           <div class="reveal index">— Chapter One —</div>
           <h2 class="reveal d1 en-title" id="biz1-heading">IP License</h2>
           <h3 class="reveal d2 ja-title">I P ライセンス</h3>
+          <p class="reveal d3 bridge"><span>権利者</span><b>貘</b><span>企業</span></p>
           <p class="reveal d3 lead">
-            <span class="nowrap">キャラクター・ブランドの</span><span class="nowrap">IPを管理し、</span><span class="nowrap">企業との共創を</span><span class="nowrap">設計します。</span>
+            <span class="nowrap">非営利団体などが持つ</span><span class="nowrap">キャラクターの権利を、</span><span class="nowrap">企業が使える形に。</span>
           </p>
           <p class="reveal d4 note">
-            <span class="nowrap">商標・著作権の管理、</span><span class="nowrap">サブライセンス供与を通じた、</span><span class="nowrap">IPの活用設計。</span>
+            <span class="nowrap">権利の管理、</span><span class="nowrap">使用許諾の契約、</span><span class="nowrap">ロイヤリティの受け渡し。</span><span class="nowrap">現在、準備中です。</span>
           </p>
         </div>
       </div>
@@ -103,48 +128,50 @@ const orgJsonLd = {
     <span class="divider"><span>02</span></span>
   </div>
 
-  <!-- §5 Business 02 -->
-  <section class="biz ink" aria-labelledby="biz2-heading">
+  <!-- §5 Business 02 : REVERSE -->
+  <section class="biz ink" data-motes data-clouds aria-labelledby="biz2-heading">
     <span class="anchor">§ 05 — Business</span>
-    <span class="anchor right">02 / 05</span>
-    <a class="biz-link" href="/business/02/" aria-label="戦略的広告代理・卸仲介事業の詳細ページへ">
+    <span class="anchor right">02 / 03</span>
+    <a class="biz-link" href="/business/02/" aria-label="AIの電子秘書 REVERSE の詳細ページへ">
       <div class="frame">
         <div class="num" aria-hidden="true">弐</div>
         <div class="content">
           <div class="reveal index">— Chapter Two —</div>
-          <h2 class="reveal d1 en-title" id="biz2-heading">Advertising &amp; Distribution</h2>
-          <h3 class="reveal d2 ja-title">戦略的広告代理・卸仲介</h3>
+          <h2 class="reveal d1 en-title" id="biz2-heading">REVERSE</h2>
+          <h3 class="reveal d2 ja-title">AIの電子秘書</h3>
+          <p class="reveal d3 bridge"><span>開発者</span><b>貘</b><span>事業者</span></p>
           <p class="reveal d3 lead">
-            <span class="nowrap">コンテンツ力で</span><span class="nowrap">「売れる仕組み」を</span><span class="nowrap">設計し、</span><span class="nowrap">動物関連市場に届けます。</span>
+            <span class="nowrap">報告・記録・集計・連絡を、</span><span class="nowrap">頼めば最後まで。</span>
           </p>
           <p class="reveal d4 note">
-            <span class="nowrap">SNS・専門家コミュニティを</span><span class="nowrap">活用した、</span><span class="nowrap">コンテンツ起点の流通設計。</span>
+            <span class="nowrap">開発者の技術を、</span><span class="nowrap">事業者が使えるサービスに。</span><span class="nowrap">販売・契約・導入・問い合わせの</span><span class="nowrap">窓口を貘が担います。</span>
           </p>
         </div>
       </div>
     </a>
   </section>
 
+  {SHOW_HIDDEN && (<Fragment>
   <div class="band-divider band-divider--paper" aria-hidden="true">
     <span class="divider"><span>03</span></span>
   </div>
 
-  <!-- §6 Business 03 -->
-  <section class="biz light" aria-labelledby="biz3-heading">
+  <section class="biz light" data-clouds aria-labelledby="biz3-heading">
     <span class="anchor">§ 06 — Business</span>
-    <span class="anchor right">03 / 05</span>
-    <a class="biz-link" href="/business/03/" aria-label="監修・コンサルティング仲介事業の詳細ページへ">
+    <span class="anchor right">03 / 06</span>
+    <a class="biz-link" href="/business/03/" aria-label="島の動物診療の運営管理の詳細ページへ">
       <div class="frame">
         <div class="num" aria-hidden="true">参</div>
         <div class="content">
           <div class="reveal index">— Chapter Three —</div>
-          <h2 class="reveal d1 en-title" id="biz3-heading">Supervision &amp; Consulting</h2>
-          <h3 class="reveal d2 ja-title">監修・コンサルティング仲介</h3>
+          <h2 class="reveal d1 en-title" id="biz3-heading">Island Veterinary Care</h2>
+          <h3 class="reveal d2 ja-title">島の動物診療</h3>
+          <p class="reveal d3 bridge"><span>獣医師</span><b>貘</b><span>島の診療所</span></p>
           <p class="reveal d3 lead">
-            <span class="nowrap">獣医師・専門家の知見を、</span><span class="nowrap">企業の商品開発へと</span><span class="nowrap">橋渡しします。</span>
+            <span class="nowrap">獣医師の少ない島で、</span><span class="nowrap">動物の診療が</span><span class="nowrap">続くように。</span>
           </p>
           <p class="reveal d4 note">
-            <span class="nowrap">動物・環境配慮型商品の</span><span class="nowrap">専門監修、</span><span class="nowrap">知見ネットワークの仲介。</span>
+            <span class="nowrap">通う獣医師・看護師の手配と、</span><span class="nowrap">予約・在庫・記録・会計の管理を</span><span class="nowrap">貘が引き受けます。</span>
           </p>
         </div>
       </div>
@@ -155,48 +182,77 @@ const orgJsonLd = {
     <span class="divider"><span>04</span></span>
   </div>
 
-  <!-- §7 Business 04 -->
-  <section class="biz ink" aria-labelledby="biz4-heading">
+  <section class="biz ink" data-motes data-clouds aria-labelledby="biz4-heading">
     <span class="anchor">§ 07 — Business</span>
-    <span class="anchor right">04 / 05</span>
-    <a class="biz-link" href="/business/04/" aria-label="イベント事業の詳細ページへ">
+    <span class="anchor right">04 / 06</span>
+    <a class="biz-link" href="/business/04/" aria-label="営業代行・取次事業の詳細ページへ">
       <div class="frame">
         <div class="num" aria-hidden="true">肆</div>
         <div class="content">
           <div class="reveal index">— Chapter Four —</div>
-          <h2 class="reveal d1 en-title" id="biz4-heading">Community Events</h2>
-          <h3 class="reveal d2 ja-title">イベント事業</h3>
+          <h2 class="reveal d1 en-title" id="biz4-heading">Sales Agency</h2>
+          <h3 class="reveal d2 ja-title">営業代行・取次</h3>
+          <p class="reveal d3 bridge"><span>提供会社</span><b>貘</b><span>事業者</span></p>
           <p class="reveal d3 lead">
-            <span class="nowrap">命と人が出会う場を、</span><span class="nowrap">地域の真ん中に作ります。</span>
+            <span class="nowrap">事業者の役に立つ</span><span class="nowrap">製品・サービスを、</span><span class="nowrap">必要としている現場へ。</span>
           </p>
           <p class="reveal d4 note">
-            <span class="nowrap">お寺を拠点とした、</span><span class="nowrap">譲渡会・講演会・</span><span class="nowrap">文化交流イベントの企画運営。</span>
+            <span class="nowrap">キャッシュレス決済端末の</span><span class="nowrap">導入の取次など。</span><span class="nowrap">ご案内から担当者への</span><span class="nowrap">おつなぎまで。</span>
           </p>
         </div>
       </div>
     </a>
   </section>
 
-  <div class="band-divider band-divider--ink" aria-hidden="true">
+  <div class="band-divider band-divider--paper" aria-hidden="true">
     <span class="divider"><span>05</span></span>
   </div>
 
-  <!-- §8 Business 05 -->
-  <section class="biz light" aria-labelledby="biz5-heading">
+  <section class="biz light" data-clouds aria-labelledby="biz5-heading">
     <span class="anchor">§ 08 — Business</span>
-    <span class="anchor right">05 / 05</span>
-    <a class="biz-link" href="/business/05/" aria-label="Web・アプリ開発事業の詳細ページへ">
+    <span class="anchor right">05 / 06</span>
+    <a class="biz-link" href="/business/05/" aria-label="監修・コンサルティング事業の詳細ページへ">
       <div class="frame">
         <div class="num" aria-hidden="true">伍</div>
         <div class="content">
           <div class="reveal index">— Chapter Five —</div>
-          <h2 class="reveal d1 en-title" id="biz5-heading">Web &amp; App Development</h2>
-          <h3 class="reveal d2 ja-title">Web・アプリ開発</h3>
+          <h2 class="reveal d1 en-title" id="biz5-heading">Supervision &amp; Consulting</h2>
+          <h3 class="reveal d2 ja-title">監修・コンサルティング</h3>
+          <p class="reveal d3 bridge"><span>専門家</span><b>貘</b><span>企業</span></p>
           <p class="reveal d3 lead">
-            <span class="nowrap">Webとアプリで、</span><span class="nowrap">事業のデジタル化を支えます。</span>
+            <span class="nowrap">獣医師などの</span><span class="nowrap">専門家の知見を、</span><span class="nowrap">企業の商品開発へ。</span>
           </p>
           <p class="reveal d4 note">
-            <span class="nowrap">他社・他団体の</span><span class="nowrap">HP・LP制作、</span><span class="nowrap">AI導入支援、</span><span class="nowrap">アプリケーション開発。</span>
+            <span class="nowrap">動物に関わる</span><span class="nowrap">商品・サービスの監修、</span><span class="nowrap">動物病院・施設への助言。</span>
+          </p>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  </Fragment>)}
+
+  <div class="band-divider band-divider--paper" aria-hidden="true">
+    <span class="divider"><span>03</span></span>
+  </div>
+
+  <!-- §6 Business 03 : Event -->
+  <section class="biz light" data-clouds aria-labelledby="biz6-heading">
+    <span class="anchor">§ 06 — Business</span>
+    <span class="anchor right">03 / 03</span>
+    <a class="biz-link" href="/business/03/" aria-label="イベントの運営管理の詳細ページへ">
+      <div class="frame">
+        <div class="num" aria-hidden="true">参</div>
+        <div class="content">
+          <div class="reveal index">— Chapter Three —</div>
+          <h2 class="reveal d1 en-title" id="biz6-heading">Event Management</h2>
+          <h3 class="reveal d2 ja-title">イベントの運営管理</h3>
+          <p class="reveal d3 bridge"><span>イベンター</span><b>貘</b><span>依頼主</span></p>
+          <p class="reveal d3 lead">
+            <span class="nowrap">イベントを形にできる人と、</span><span class="nowrap">開きたい人をつなぎます。</span>
+          </p>
+          <p class="reveal d4 note">
+            <span class="nowrap">申込・名簿・連絡・経費の管理は</span><span class="nowrap">REVERSEで。</span><span class="nowrap">窓口は貘がひとつに。</span>
           </p>
         </div>
       </div>
@@ -207,9 +263,9 @@ const orgJsonLd = {
     <span class="divider"><span>Company</span></span>
   </div>
 
-  <!-- §9 Company -->
-  <section id="company" class="company" aria-labelledby="company-heading">
-    <span class="anchor">§ 09 — Company</span>
+  <!-- §7 Company -->
+  <section id="company" class="company" data-waves="paper" aria-labelledby="company-heading">
+    <span class="anchor">§ 07 — Company</span>
     <div class="reveal"><span class="eyebrow">Company Profile</span></div>
     <h2 id="company-heading" class="reveal d1 h-mincho company-title">
       法 人 情 報
@@ -217,17 +273,19 @@ const orgJsonLd = {
 
     <dl class="grid reveal d2">
       <dt>Name</dt>           <dd>合同会社 貘 ／ Baku LLC</dd>
-      <dt>Established</dt>    <dd>2026年</dd>
+      <dt>Established</dt>    <dd>2026年10月</dd>
       <dt>Representative</dt> <dd>代表社員　坂本 和哉</dd>
-      <dt>Address</dt>        <dd>日本国内（詳細はお問い合わせください）</dd>
-      <dt>Business</dt>       <dd>IPライセンス／広告代理・卸仲介／監修・コンサルティング／イベント事業／Web・アプリケーション開発</dd>
+      <dt>Address</dt>        <dd><span class="nowrap">〒140-0001</span>　<span class="nowrap">東京都品川区</span><span class="nowrap">北品川四丁目11-8</span> <span class="nowrap">春雨寺1階</span></dd>
+      <dt>Capital</dt>        <dd>10万円</dd>
+      <dt>Corporate No.</dt>  <dd>7010703008530</dd>
+      <dt>Business</dt>       <dd><span class="nowrap">IPライセンスの管理／</span><span class="nowrap">AIの電子秘書「REVERSE」の開発・提供／</span><span class="nowrap">イベントの運営管理</span></dd>
       <dt>Contact</dt>        <dd><a class="contact-link" href="mailto:baku@baku-llc.co.jp">baku@baku-llc.co.jp</a></dd>
     </dl>
   </section>
 
   </main>
 
-  <!-- §10 Footer -->
+  <!-- §11 Footer -->
   <footer>
     <div class="row">
       <div class="brand">
@@ -240,6 +298,7 @@ const orgJsonLd = {
         <a href="#mission">Mission</a>
         <a href="#business">Business</a>
         <a href="#company">Company</a>
+        <a href="https://reverse-lp.pages.dev/">REVERSE ↗</a>
       </div>
       <div class="col">
         <h6>Contact</h6>
