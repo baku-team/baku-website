@@ -1,5 +1,12 @@
 ---
+import SysIllust from '../components/SysIllust.astro';
+import IpIllust from '../components/IpIllust.astro';
+import IslandIllust from '../components/IslandIllust.astro';
+import { CLINIC_URL, SHOW_ISLAND, FORM_READY } from '../config';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Cloud from '../components/Cloud.astro';
+import FactTable from '../components/FactTable.astro';
+import ContactEntry from '../components/ContactEntry.astro';
 
 const orgJsonLd = {
   '@context': 'https://schema.org',
@@ -19,335 +26,238 @@ const orgJsonLd = {
     addressCountry: 'JP',
   },
 };
-
-// 非表示中の事業（島の動物診療・営業代行・取次・監修）。出すときは true にし、
-// pages/business/_hidden-*.astro の名前と番号、BusinessLayout の TOTAL も直す。
-const SHOW_HIDDEN = false;
 ---
 <BaseLayout
   title="合同会社 貘 | Baku LLC"
-  description="合同会社 貘は、権利・技術・知見を持つ人と、それを求める事業者のあいだに立つ管理会社です。IPライセンス、AIの電子秘書「REVERSE」、イベントの運営管理の事業で、契約や窓口、日々の運営を引き受けます。"
-  ogDescription="持つ人と、求める人を、つなぐ。"
+  description={SHOW_ISLAND ? "合同会社 貘は、業務システムの開発、キャラクターなどの知的財産の管理、島の動物診療所の運営を行う会社です。契約、権利の管理、窓口、日々の運営を引き受けます。" : "合同会社 貘は、業務システムの開発と、キャラクターなどの知的財産の管理を行う会社です。契約、権利の管理、窓口、日々の運営を引き受けます。"}
+  ogDescription={SHOW_ISLAND ? "システム開発・知的財産の管理・島の動物診療の会社です。" : "システム開発と知的財産の管理の会社です。"}
 >
   <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(orgJsonLd)} />
 
-  <a class="skip-link" href="#about">本文へスキップ</a>
-
-  <header class="topbar">
-    <div class="mark">BAKU&nbsp;&nbsp;LLC</div>
-    <nav aria-label="グローバルナビゲーション">
-      <a href="#about">About</a>
-      <a href="#mission">Mission</a>
-      <a href="#business">Business</a>
-      <a href="#company">Company</a>
-    </nav>
-  </header>
-
-  <main>
-
-  <!-- §1 Hero -->
-  <section class="hero" aria-label="Hero">
-    <video
-      id="hero-video"
-      src="/assets/baku_video_final.mp4"
-      autoplay muted playsinline preload="auto"
-      aria-hidden="true"></video>
-    <div class="veil" aria-hidden="true"></div>
-    <a class="scroll-cue" href="#about" aria-label="次のセクションへ進む">　 進 む 　</a>
-  </section>
-
-  <!-- §2 About -->
-  <section id="about" class="about" aria-labelledby="about-heading" data-moon data-waves="paper">
-    <span class="anchor">§ 02 — About</span>
-    <h2 id="about-heading" class="copy reveal d1">
-      <span class="nowrap">持つ人と、</span><span class="nowrap">求める人を、</span><span class="nowrap"><em>つなぐ</em>。</span>
-    </h2>
-    <p class="sub reveal d3">
-      <span class="nowrap">合同会社 貘は、</span><span class="nowrap">権利・技術・知見を持つ人と、</span><br class="br-pc" />
-      <span class="nowrap">それを求める事業者の</span><span class="nowrap">あいだに立つ</span><span class="nowrap">管理会社です。</span>
-    </p>
-  </section>
-
-  <div class="band-divider band-divider--ink" aria-hidden="true">
-    <span class="divider"><span>§</span></span>
+  <!-- ① 冒頭：紋章ができあがる部分は1回、その後は背景の花びらだけが動き続ける -->
+  <div class="hero-wrap">
+    <section class="hero" aria-label="オープニング">
+      <video id="hero-video" src="/assets/baku_video_final.mp4" autoplay muted playsinline preload="auto" aria-hidden="true"></video>
+      <img class="hero-still" src="/assets/hero_still.webp" alt="" aria-hidden="true" />
+      <canvas class="hero-petals" aria-hidden="true"></canvas>
+      <div class="veil" aria-hidden="true"></div>
+    </section>
   </div>
 
-  <!-- §3 Mission -->
-  <section id="mission" class="mission ink" aria-labelledby="mission-heading" data-motes data-waves="ink">
-    <span class="anchor">§ 03 — Mission</span>
-    <div class="reveal"><span class="eyebrow" id="mission-heading">Our Mission</span></div>
-    <div class="rule-v reveal d1" aria-hidden="true"></div>
-
-    <div class="lines">
-      <p class="reveal d2"><span class="nowrap">つなぐための<em>実務</em>を、</span><br /><span class="nowrap">引き受ける。</span></p>
-      <p class="reveal d4 body">
-        <span class="nowrap">契約、権利の管理、</span><span class="nowrap">窓口、日々の運営。</span><br class="br-pc" />
-        <span class="nowrap">あいだで生まれる手間を</span><span class="nowrap">貘が受け持つことで、</span><br class="br-pc" />
-        <span class="nowrap">持つ人は本業に、</span><span class="nowrap">求める人は使うことに</span><span class="nowrap">集中できます。</span>
-      </p>
-    </div>
-
-    <div class="emblem" aria-hidden="true">
-      <svg class="emblem-ring" viewBox="0 0 200 200">
-        <defs><path id="emblem-path" d="M100,100 m-86,0 a86,86 0 1,1 172,0 a86,86 0 1,1 -172,0" /></defs>
-        <circle cx="100" cy="100" r="96" />
-        <text><textPath href="#emblem-path">BAKU LLC · MANAGEMENT · TOKYO · ESTABLISHED 2026 ·</textPath></text>
-      </svg>
-      <div class="disc"><img src="/assets/emblem.webp" alt="" width="720" height="720" loading="lazy" decoding="async" /></div>
+  <!-- ② ステートメント（藍） -->
+  <section class="sec sec--1 center" aria-labelledby="statement-h" data-reveal>
+    <Cloud side="l" /><Cloud side="r" />
+    <div class="container">
+      <h1 class="vh">合同会社 貘</h1>
+      <h2 class="display rv" id="statement-h">あいだに立って、実務を引き受けます。</h2>
+      <p class="lead rv" style="margin:40px auto 0;max-width:30em">システムを必要とする事業者と、それを作る開発者。キャラクターの権利者と、それを使いたい企業。{SHOW_ISLAND && '獣医師の少ない島と、そこへ通う獣医師。'}</p>
+      <p class="rv" style="margin:24px auto 0;max-width:30em">そのあいだには、契約、権利の管理、窓口、日々の運営といった実務が生まれます。合同会社 貘は、その実務を引き受けます。それぞれが、本来の仕事に集中できます。</p>
     </div>
   </section>
 
-  <div class="band-divider band-divider--paper" aria-hidden="true">
-    <span class="divider"><span>Business</span></span>
-  </div>
-
-  <!-- §4 Business 01 : IP -->
-  <section id="business" class="biz light" data-clouds aria-labelledby="biz1-heading">
-    <span class="anchor">§ 04 — Business</span>
-    <span class="anchor right">01 / 03</span>
-    <a class="biz-link" href="/business/01/" aria-label="IPライセンス事業の詳細ページへ">
-      <div class="frame">
-        <div class="num" aria-hidden="true">壱</div>
-        <div class="content">
-          <div class="reveal index">— Chapter One —</div>
-          <h2 class="reveal d1 en-title" id="biz1-heading">IP License</h2>
-          <h3 class="reveal d2 ja-title">I P ライセンス</h3>
-          <p class="reveal d3 bridge"><span>権利者</span><b>貘</b><span>企業</span></p>
-          <p class="reveal d3 lead">
-            <span class="nowrap">非営利団体などが持つ</span><span class="nowrap">キャラクターの権利を、</span><span class="nowrap">企業が使える形に。</span>
-          </p>
-          <p class="reveal d4 note">
-            <span class="nowrap">権利の管理、</span><span class="nowrap">使用許諾の契約、</span><span class="nowrap">ロイヤリティの受け渡し。</span><span class="nowrap">現在、準備中です。</span>
-          </p>
+  <!-- ③ 事業：システム開発（生成りの帯・からくり帳場の絵） -->
+  <section class="sec sec--1 paper" id="business" aria-labelledby="biz2-h" data-reveal>
+    <div class="container">
+      <div class="head-l"><span class="label rv">事業</span></div>
+      <div class="grid biz2 rev">
+        <div class="txt-col">
+          <h3 class="h3 rv" id="biz2-h">システム開発</h3>
+          <p class="lead rv">業務を動かすシステムを、作るところから運用まで。</p>
+          <p class="rv">業務システム・Web・アプリを必要とする事業者のご相談をお受けしています。開発は提携する開発者が担い、ご相談・契約・導入・お問い合わせの窓口は貘がひとつにまとめます。</p>
+          <p class="h4">引き受けること</p>
+          <ul class="duties">
+            <li><b>開発</b><span>業務システム・Webサイト・アプリの開発</span></li>
+            <li><b>自動化</b><span>AIを使った、事務の作業の自動化</span></li>
+            <li><b>運用</b><span>使い始めてからの運用と保守、使い方のご相談</span></li>
+          </ul>
+          <a class="btn" href="/business/02/">システム開発について <span aria-hidden="true">→</span></a>
         </div>
-      </div>
-    </a>
-  </section>
-
-  <div class="band-divider band-divider--ink" aria-hidden="true">
-    <span class="divider"><span>02</span></span>
-  </div>
-
-  <!-- §5 Business 02 : REVERSE -->
-  <section class="biz ink" data-motes data-clouds aria-labelledby="biz2-heading">
-    <span class="anchor">§ 05 — Business</span>
-    <span class="anchor right">02 / 03</span>
-    <a class="biz-link" href="/business/02/" aria-label="AIの電子秘書 REVERSE の詳細ページへ">
-      <div class="frame">
-        <div class="num" aria-hidden="true">弐</div>
-        <div class="content">
-          <div class="reveal index">— Chapter Two —</div>
-          <h2 class="reveal d1 en-title" id="biz2-heading">REVERSE</h2>
-          <h3 class="reveal d2 ja-title">AIの電子秘書</h3>
-          <p class="reveal d3 bridge"><span>開発者</span><b>貘</b><span>事業者</span></p>
-          <p class="reveal d3 lead">
-            <span class="nowrap">報告・記録・集計・連絡を、</span><span class="nowrap">頼めば最後まで。</span>
-          </p>
-          <p class="reveal d4 note">
-            <span class="nowrap">開発者の技術を、</span><span class="nowrap">事業者が使えるサービスに。</span><span class="nowrap">販売・契約・導入・問い合わせの</span><span class="nowrap">窓口を貘が担います。</span>
-          </p>
+        <div class="fig-col fig-wrap rv-fig">
+          <div class="float float--slow"><SysIllust /></div>
         </div>
-      </div>
-    </a>
-  </section>
-
-  {SHOW_HIDDEN && (<Fragment>
-  <div class="band-divider band-divider--paper" aria-hidden="true">
-    <span class="divider"><span>03</span></span>
-  </div>
-
-  <section class="biz light" data-clouds aria-labelledby="biz3-heading">
-    <span class="anchor">§ 06 — Business</span>
-    <span class="anchor right">03 / 06</span>
-    <a class="biz-link" href="/business/03/" aria-label="島の動物診療の運営管理の詳細ページへ">
-      <div class="frame">
-        <div class="num" aria-hidden="true">参</div>
-        <div class="content">
-          <div class="reveal index">— Chapter Three —</div>
-          <h2 class="reveal d1 en-title" id="biz3-heading">Island Veterinary Care</h2>
-          <h3 class="reveal d2 ja-title">島の動物診療</h3>
-          <p class="reveal d3 bridge"><span>獣医師</span><b>貘</b><span>島の診療所</span></p>
-          <p class="reveal d3 lead">
-            <span class="nowrap">獣医師の少ない島で、</span><span class="nowrap">動物の診療が</span><span class="nowrap">続くように。</span>
-          </p>
-          <p class="reveal d4 note">
-            <span class="nowrap">通う獣医師・看護師の手配と、</span><span class="nowrap">予約・在庫・記録・会計の管理を</span><span class="nowrap">貘が引き受けます。</span>
-          </p>
-        </div>
-      </div>
-    </a>
-  </section>
-
-  <div class="band-divider band-divider--ink" aria-hidden="true">
-    <span class="divider"><span>04</span></span>
-  </div>
-
-  <section class="biz ink" data-motes data-clouds aria-labelledby="biz4-heading">
-    <span class="anchor">§ 07 — Business</span>
-    <span class="anchor right">04 / 06</span>
-    <a class="biz-link" href="/business/04/" aria-label="営業代行・取次事業の詳細ページへ">
-      <div class="frame">
-        <div class="num" aria-hidden="true">肆</div>
-        <div class="content">
-          <div class="reveal index">— Chapter Four —</div>
-          <h2 class="reveal d1 en-title" id="biz4-heading">Sales Agency</h2>
-          <h3 class="reveal d2 ja-title">営業代行・取次</h3>
-          <p class="reveal d3 bridge"><span>提供会社</span><b>貘</b><span>事業者</span></p>
-          <p class="reveal d3 lead">
-            <span class="nowrap">事業者の役に立つ</span><span class="nowrap">製品・サービスを、</span><span class="nowrap">必要としている現場へ。</span>
-          </p>
-          <p class="reveal d4 note">
-            <span class="nowrap">キャッシュレス決済端末の</span><span class="nowrap">導入の取次など。</span><span class="nowrap">ご案内から担当者への</span><span class="nowrap">おつなぎまで。</span>
-          </p>
-        </div>
-      </div>
-    </a>
-  </section>
-
-  <div class="band-divider band-divider--paper" aria-hidden="true">
-    <span class="divider"><span>05</span></span>
-  </div>
-
-  <section class="biz light" data-clouds aria-labelledby="biz5-heading">
-    <span class="anchor">§ 08 — Business</span>
-    <span class="anchor right">05 / 06</span>
-    <a class="biz-link" href="/business/05/" aria-label="監修・コンサルティング事業の詳細ページへ">
-      <div class="frame">
-        <div class="num" aria-hidden="true">伍</div>
-        <div class="content">
-          <div class="reveal index">— Chapter Five —</div>
-          <h2 class="reveal d1 en-title" id="biz5-heading">Supervision &amp; Consulting</h2>
-          <h3 class="reveal d2 ja-title">監修・コンサルティング</h3>
-          <p class="reveal d3 bridge"><span>専門家</span><b>貘</b><span>企業</span></p>
-          <p class="reveal d3 lead">
-            <span class="nowrap">獣医師などの</span><span class="nowrap">専門家の知見を、</span><span class="nowrap">企業の商品開発へ。</span>
-          </p>
-          <p class="reveal d4 note">
-            <span class="nowrap">動物に関わる</span><span class="nowrap">商品・サービスの監修、</span><span class="nowrap">動物病院・施設への助言。</span>
-          </p>
-        </div>
-      </div>
-    </a>
-  </section>
-
-  </Fragment>)}
-
-  <div class="band-divider band-divider--paper" aria-hidden="true">
-    <span class="divider"><span>03</span></span>
-  </div>
-
-  <!-- §6 Business 03 : Event -->
-  <section class="biz light" data-clouds aria-labelledby="biz6-heading">
-    <span class="anchor">§ 06 — Business</span>
-    <span class="anchor right">03 / 03</span>
-    <a class="biz-link" href="/business/03/" aria-label="イベントの運営管理の詳細ページへ">
-      <div class="frame">
-        <div class="num" aria-hidden="true">参</div>
-        <div class="content">
-          <div class="reveal index">— Chapter Three —</div>
-          <h2 class="reveal d1 en-title" id="biz6-heading">Event Management</h2>
-          <h3 class="reveal d2 ja-title">イベントの運営管理</h3>
-          <p class="reveal d3 bridge"><span>イベンター</span><b>貘</b><span>依頼主</span></p>
-          <p class="reveal d3 lead">
-            <span class="nowrap">イベントを形にできる人と、</span><span class="nowrap">開きたい人をつなぎます。</span>
-          </p>
-          <p class="reveal d4 note">
-            <span class="nowrap">申込・名簿・連絡・経費の管理は</span><span class="nowrap">REVERSEで。</span><span class="nowrap">窓口は貘がひとつに。</span>
-          </p>
-        </div>
-      </div>
-    </a>
-  </section>
-
-  <div class="band-divider band-divider--paper" aria-hidden="true">
-    <span class="divider"><span>Company</span></span>
-  </div>
-
-  <!-- §7 Company -->
-  <section id="company" class="company" data-waves="paper" aria-labelledby="company-heading">
-    <span class="anchor">§ 07 — Company</span>
-    <div class="reveal"><span class="eyebrow">Company Profile</span></div>
-    <h2 id="company-heading" class="reveal d1 h-mincho company-title">
-      法 人 情 報
-    </h2>
-
-    <dl class="grid reveal d2">
-      <dt>Name</dt>           <dd>合同会社 貘 ／ Baku LLC</dd>
-      <dt>Established</dt>    <dd>2026年10月</dd>
-      <dt>Representative</dt> <dd>代表社員　坂本 和哉</dd>
-      <dt>Address</dt>        <dd><span class="nowrap">〒140-0001</span>　<span class="nowrap">東京都品川区</span><span class="nowrap">北品川四丁目11-8</span> <span class="nowrap">春雨寺1階</span></dd>
-      <dt>Capital</dt>        <dd>10万円</dd>
-      <dt>Corporate No.</dt>  <dd>7010703008530</dd>
-      <dt>Business</dt>       <dd><span class="nowrap">IPライセンスの管理／</span><span class="nowrap">AIの電子秘書「REVERSE」の開発・提供／</span><span class="nowrap">イベントの運営管理</span></dd>
-      <dt>Contact</dt>        <dd><a class="contact-link" href="mailto:baku@baku-llc.co.jp">baku@baku-llc.co.jp</a></dd>
-    </dl>
-  </section>
-
-  </main>
-
-  <!-- §11 Footer -->
-  <footer>
-    <div class="row">
-      <div class="brand">
-        貘
-        <small>BAKU &nbsp; LLC</small>
-      </div>
-      <div class="col">
-        <h6>Sitemap</h6>
-        <a href="#about">About</a>
-        <a href="#mission">Mission</a>
-        <a href="#business">Business</a>
-        <a href="#company">Company</a>
-        <a href="https://reverse-lp.pages.dev/">REVERSE ↗</a>
-      </div>
-      <div class="col">
-        <h6>Contact</h6>
-        <a href="mailto:baku@baku-llc.co.jp">baku@baku-llc.co.jp</a>
-        <p class="muted">For partnership / press inquiries.</p>
-      </div>
-      <div class="col">
-        <h6>Follow</h6>
-        <a href="#" aria-disabled="true" tabindex="-1">X &nbsp;— coming soon</a>
-        <a href="#" aria-disabled="true" tabindex="-1">Instagram &nbsp;— coming soon</a>
       </div>
     </div>
-    <div class="copy">
-      <span>© 2026 Baku LLC.&nbsp;&nbsp;All rights reserved.</span>
-      <span>合 同 会 社 　 貘</span>
+  </section>
+
+  <!-- ④ 事業：IPライセンス（藍・線画） -->
+  <section class="sec sec--1" aria-labelledby="biz-h" data-reveal>
+    <div class="container">
+      <div class="grid biz2">
+        <div class="fig-col fig-wrap rv-fig">
+          <div class="float float--slow"><IpIllust /></div>
+        </div>
+        <div class="txt-col">
+          <h3 class="h3 rv" id="biz-h">IPライセンス</h3>
+          <p class="lead rv">キャラクターの権利（IP）を、企業が使える形に。</p>
+          <p class="rv">権利の管理、使用許諾の契約、ロイヤリティの受け渡しを引き受けます。権利者は本来の活動に専念でき、企業はひとつの窓口で権利を使えます。</p>
+          <p class="h4">担うこと</p>
+          <ul class="duties">
+            <li><b>管理</b><span>商標・著作権の管理と、使い方の決まりの運用</span></li>
+            <li><b>使用許諾</b><span>企業からの申し込みの受付と、使用許諾の契約</span></li>
+            <li><b>ロイヤリティ</b><span>使用状況の確認と、ロイヤリティの受け渡し</span></li>
+          </ul>
+          <p class="note rv">現在は準備中です。管理委託・商用利用のご相談は受け付けています。</p>
+          <a class="btn" href="/business/01/">IPライセンスについて <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <!-- ⑤ 事業：島の動物診療（生成り・島の絵）。SHOW_ISLAND が false の間は出さない -->
+  {SHOW_ISLAND && (
+  <section class="sec sec--1 paper" aria-labelledby="biz3-h" data-reveal>
+    <div class="container">
+      <div class="grid biz2 rev">
+        <div class="txt-col">
+          <h3 class="h3 rv" id="biz3-h">島の動物診療</h3>
+          <p class="lead rv">獣医師の少ない島で、動物の診療が続くように。</p>
+          <p class="rv">獣医師が常駐しにくい島の動物診療所の運営を引き受け、島へ通う獣医師・看護師を手配します。予約や記録といった事務は貘がまとめ、獣医師は診療に集中できるようにします。</p>
+          <p class="h4">担うこと</p>
+          <ul class="duties">
+            <li><b>人の手配</b><span>島へ通う獣医師・看護師の、日程の調整と手配</span></li>
+            <li><b>予約・問い合わせ</b><span>診療日の予約の受付と、飼い主からの問い合わせへの対応</span></li>
+            <li><b>在庫・記録・会計</b><span>薬や物品の発注、診療の記録と会計</span></li>
+          </ul>
+          <p class="note rv">最初の島は伊豆大島の「うみねこ診療所」です。運営の形を関係者と話し合っています。</p>
+          <div class="btn-row">
+            <a class="btn" href="/business/03/">島の動物診療について <span aria-hidden="true">→</span></a>
+            <a class="btn" href={CLINIC_URL} target="_blank" rel="noopener">うみねこ診療所のサイト <span aria-hidden="true">↗</span><span class="vh">（新しいタブで開きます）</span></a>
+          </div>
+        </div>
+        <div class="fig-col fig-wrap rv-fig">
+          <div class="float float--slow"><IslandIllust /></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  )}
+
+  <!-- ⑥ 会社の要点（中央が明るい藍・紋章の見切れ） -->
+  <section class="sec sec--2 bg-lift" aria-labelledby="co-h" data-reveal>
+    <img class="bleed-emblem" data-parallax="0.08" src="/assets/emblem.webp" alt="" aria-hidden="true" width="520" height="520" loading="lazy" />
+    <div class="container grid">
+      <div style="grid-column:1 / span 7">
+        <span class="label rv">会社概要</span>
+        <h2 class="h2 rv" id="co-h" style="margin:16px 0 24px">合同会社 貘</h2>
+        <p class="rv measure">貘は、悪い夢を食べるとされる想像上の動物です。人や組織が抱えきれないものを引き受ける仕事をしたい、という考えから、この名を付けました。</p>
+        <div class="rv" style="margin-top:40px">
+          <FactTable rows={[
+            ['商号', '合同会社 貘（Baku LLC）'],
+            ['設立', '2026年10月'],
+            ['所在地', '東京都品川区北品川四丁目11-8 春雨寺1階'],
+            ['事業内容', SHOW_ISLAND ? 'システムの開発と提供／知的財産（IP）のライセンス管理／島の動物診療所の運営管理' : 'システムの開発と提供／知的財産（IP）のライセンス管理'],
+          ]} caption="会社の要点" />
+        </div>
+        <a class="btn rv" href="/company/">会社概要へ <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ お問い合わせ（藍＋青海波） -->
+  <ContactEntry heading="まずは、ご相談から。" text={FORM_READY ? "どの事業のご相談も、お問い合わせフォームからお送りください。担当者から、メールでお返事します。" : "どの事業のご相談も、メールでお送りください。担当者から、メールでお返事します。"} />
+
 
   <script is:inline>
-  (function () {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-      return;
-    }
-    var io = new IntersectionObserver(function (entries) {
-      for (var i = 0; i < entries.length; i++) {
-        var e = entries[i];
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      }
-    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
-  })();
-  </script>
-
-  <script is:inline>
-  /* Hero video: fade in only after the first frame is decoded, so the dark ink
-     background is shown during load instead of a stretched poster image. */
+  /* 冒頭：動画が最初のコマを用意できたら静かに出す */
   (function () {
     var v = document.getElementById('hero-video');
     if (!v) return;
     var ready = function () { v.classList.add('is-ready'); };
-    if (v.readyState >= 2) { ready(); }
-    else {
-      v.addEventListener('loadeddata', ready, { once: true });
-      v.addEventListener('canplay', ready, { once: true });
+    if (v.readyState >= 2) ready();
+    else { v.addEventListener('loadeddata', ready, { once: true }); v.addEventListener('canplay', ready, { once: true }); }
+  })();
+  </script>
+
+  <script is:inline>
+  /* 背景の花びらだけを動かし続ける（紋章ができあがる部分は1回だけ）。
+     座標は動画の画素（1920×1080）で持ち、画面には動画と同じ写し方（横長は contain・それ以外は cover）で描く。
+     紋章の円（中心 960,510・半径 362）の内側には描かない＝花びらは紋章の後ろを通る。
+     「動きを止める」では花びらを止めて隠す（静止画は残る）。 */
+  (function () {
+    var root = document.documentElement;
+    var hero = document.querySelector('.hero');
+    var v = document.getElementById('hero-video');
+    var still = hero && hero.querySelector('.hero-still');
+    var cv = hero && hero.querySelector('.hero-petals');
+    var cue = hero && hero.querySelector('.hero-cue');
+    if (!hero || !v || !still || !cv) return;
+    var VW = 1920, VH = 1080, CX = 960, CY = 510, CR = 362;
+    function wide() { return hero.clientWidth / hero.clientHeight > VW / VH + 0.01; }
+    function layout() { hero.classList.toggle('is-wide', wide()); }
+    layout(); addEventListener('resize', layout);
+    function off() { return root.dataset.motion === 'off'; }
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { still.classList.add('on'); if (cue) cue.classList.add('on'); return; }
+
+    var ctx = cv.getContext('2d');
+    var dpr = 1, s = 1, ox = 0, oy = 0;
+    function fit() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = hero.clientWidth, h = hero.clientHeight;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      s = wide() ? Math.min(w / VW, h / VH) : Math.max(w / VW, h / VH);
+      ox = (w - VW * s) / 2; oy = (h - VH * s) / 2;
     }
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function petal(x, y, first) {
+      return { x: x, y: y, vx: first ? -65 : rand(-80, -40), vy: first ? 52 : rand(36, 66),
+        sway: rand(10, 26), ph: rand(0, 6.28), fq: rand(.5, 1.1), rot: rand(0, 6.28), vr: rand(-.9, .9), sz: rand(.8, 1.2), a: rand(.55, .85) };
+    }
+    var petals = [];
+    function spawn() { return Math.random() < .6 ? petal(rand(1300, 1980), rand(-40, 600)) : petal(VW + 30, rand(120, 760)); }
+    function draw(p, t) {
+      var x = p.x + Math.sin(t * p.fq + p.ph) * p.sway;
+      ctx.save();
+      ctx.translate(x, p.y); ctx.rotate(p.rot + Math.sin(t * .8 + p.ph) * .4);
+      ctx.scale(p.sz, p.sz * (0.55 + 0.45 * Math.abs(Math.cos(t * p.fq * 1.4 + p.ph))));
+      var g = ctx.createLinearGradient(0, -12, 0, 12);
+      g.addColorStop(0, 'rgba(232,170,170,' + p.a + ')');
+      g.addColorStop(1, 'rgba(196,128,132,' + (p.a * .9) + ')');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(0, 12); ctx.bezierCurveTo(-9, 5, -8, -9, -2.5, -12); ctx.lineTo(0, -9); ctx.lineTo(2.5, -12); ctx.bezierCurveTo(8, -9, 9, 5, 0, 12);
+      ctx.fill(); ctx.restore();
+    }
+    var running = false, last = 0, visible = true;
+    function frame(now) {
+      if (!running) return;
+      if (off()) { running = false; return; }
+      var dt = Math.min((now - last) / 1000, .05); last = now;
+      var t = now / 1000;
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.setTransform(s * dpr, 0, 0, s * dpr, ox * dpr, oy * dpr);
+      ctx.save();
+      ctx.beginPath(); ctx.rect(-200, -200, VW + 400, VH + 400); ctx.arc(CX, CY, CR, 0, Math.PI * 2, true); ctx.clip();
+      for (var i = 0; i < petals.length; i++) {
+        var p = petals[i];
+        p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.vr * dt;
+        if (p.x < -60 || p.y > VH + 60) petals[i] = spawn();
+        draw(petals[i], t);
+      }
+      ctx.restore();
+      if (visible) requestAnimationFrame(frame); else running = false;
+    }
+    function start() { if (running || off()) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
+    function handoff() {
+      if (still.classList.contains('on')) return;
+      fit();
+      petals = [petal(1736, 545, true)];
+      for (var k = 0; k < 6; k++) { var q = spawn(); q.x = rand(80, 1880); q.y = rand(40, 1040); petals.push(q); }
+      still.classList.add('on'); cv.classList.add('on'); hero.classList.add('handed');
+      if (cue) cue.classList.add('on');
+      start();
+    }
+    // 「動きを止める」が最初から有効なら、動画を流さず最後のコマから始める
+    if (off()) { v.pause(); handoff(); }
+    v.addEventListener('ended', handoff);
+    v.addEventListener('timeupdate', function () { if (v.duration && v.currentTime > v.duration - .08) handoff(); });
+    v.addEventListener('error', handoff);
+    addEventListener('resize', fit);
+    addEventListener('baku:motion', function () { if (off()) { v.pause(); handoff(); } else if (still.classList.contains('on')) start(); });
+    new IntersectionObserver(function (es) {
+      visible = es[0].isIntersecting;
+      if (visible && still.classList.contains('on')) start();
+    }).observe(hero);
   })();
   </script>
 </BaseLayout>

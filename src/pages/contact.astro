@@ -1,0 +1,62 @@
+---
+import { SHOW_ISLAND, FORM_READY, CONTACT_MAIL, SHOW_PRIVACY } from '../config';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Cloud from '../components/Cloud.astro';
+import Waves from '../components/Waves.astro';
+// 問い合わせは REVERSE の公開フォーム（申込の公開ページ）で受ける（2026-11-10 坂本さん）。
+// 受付ページはまだ作っていないので、仮の行き先。作ったら URL を差し替える。
+const FORM_URL = '#reverse-form-tbd';
+---
+<BaseLayout
+  title="お問い合わせ | 合同会社 貘"
+  description={FORM_READY ? "合同会社 貘へのご相談は、お問い合わせフォームでお受けしています。" : "合同会社 貘へのご相談は、メールでお受けしています。"}
+  canonicalPath="/contact/"
+  current="contact"
+>
+  <section class="sec sec--1 center page-head" aria-labelledby="ph" data-reveal style="padding-bottom:96px">
+    <div data-parallax="0.05" style="position:absolute;inset:-24px 0;z-index:0"><Waves variant="full" /></div>
+    <Cloud side="l" />
+    <div class="container">
+      <ol class="crumbs rv" aria-label="現在地"><li><a href="/">ホーム</a></li><li aria-current="page">お問い合わせ</li></ol>
+      <span class="label rv">お問い合わせ</span>
+      <h1 class="display rv" id="ph" style="margin-top:16px">ご相談を、お受けしています。</h1>
+      <p class="lead rv">{FORM_READY ? 'お問い合わせフォームからお送りください。' : 'メールでお送りください。'}</p>
+    </div>
+  </section>
+
+  <section class="sec sec--2 paper" aria-labelledby="form-h" data-reveal>
+    <div class="container">
+      <div class="cform">
+        <div class="head-l"><h2 class="h3 rv" id="form-h">{FORM_READY ? 'フォームでお聞きすること' : 'メールに書いていただきたいこと'}</h2></div>
+        <ol class="f-steps rv">
+          <li><b>ご用件</b><span>{SHOW_ISLAND ? 'システム開発／IPライセンス／島の動物診療／REVERSE／取材・その他' : 'システム開発／IPライセンス／REVERSE／取材・その他'}</span></li>
+          <li><b>お名前・会社名</b><span>団体の方は団体名を、個人の方はお名前を。</span></li>
+          {FORM_READY && <li><b>メールアドレス</b><span>お返事は、このアドレスにお送りします。</span></li>}
+          <li><b>ご相談の内容</b><span>目的や時期など、わかる範囲で。</span></li>
+        </ol>
+        {FORM_READY ? (<>
+        <p class="rv"><a class="btn btn--primary" href={FORM_URL} rel="noopener">お問い合わせフォームを開く <span aria-hidden="true">↗</span></a></p>
+        <p class="f-note rv">フォームは、貘が開発・提供する業務AI「REVERSE」の受付ページで開きます。いただいた情報は、このお問い合わせへのお返事にだけ使います。{SHOW_PRIVACY && <>個人情報の扱いは、<a href="/privacy/">プライバシーポリシー</a>をご覧ください。</>}</p>
+        <p class="f-alt rv">フォームが使えない場合は、<a href={`mailto:${CONTACT_MAIL}`}>{CONTACT_MAIL}</a> へメールでお送りください。</p>
+        </>) : (<>
+        <p class="rv"><a class="btn btn--primary" href={`mailto:${CONTACT_MAIL}`}>メールで問い合わせる <span aria-hidden="true">→</span></a></p>
+        <p class="f-note rv">宛先：<a href={`mailto:${CONTACT_MAIL}`}>{CONTACT_MAIL}</a><br>いただいた情報は、このお問い合わせへのお返事にだけ使います。{SHOW_PRIVACY && <>個人情報の扱いは、<a href="/privacy/">プライバシーポリシー</a>をご覧ください。</>}</p>
+        </>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--2 bg-ink2" aria-label="所在地" data-reveal>
+    <div class="container grid" style="row-gap:48px">
+      <div style="grid-column:1 / span 6">
+        <h2 class="h3 rv">お返事について</h2>
+        <p class="rv" style="margin-top:24px">担当者から、メールでお返事します。{FORM_READY ? 'お問い合わせは、フォームとメールでお受けしています。' : 'お問い合わせは、メールでお受けしています。'}</p>
+      </div>
+      <div style="grid-column:8 / span 5">
+        <h2 class="h3 rv">所在地</h2>
+        <address class="rv" style="margin-top:24px;font-style:normal">〒140-0001<br />東京都品川区北品川四丁目11-8 春雨寺1階<br /><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E9%83%BD%E5%93%81%E5%B7%9D%E5%8C%BA%E5%8C%97%E5%93%81%E5%B7%9D%E5%9B%9B%E4%B8%81%E7%9B%AE11-8" rel="noopener">地図を開く ↗</a></address>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

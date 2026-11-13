@@ -1,6 +1,8 @@
 ---
-import '../styles/site.css';
-import '../styles/motion.css';
+// 2026-11-10 v2：藍の夜のまま、組む（設計書 design_brief_v2.md）
+import '../styles/v2.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 
 interface Props {
   title: string;
@@ -8,6 +10,9 @@ interface Props {
   ogDescription?: string;
   canonicalPath?: string;
   ogImagePath?: string;
+  current?: 'ip' | 'system' | 'island' | 'company' | 'contact' | null;
+  /** 古いページ（_hidden-*）向け：ヘッダーとフッターを自前で持つ場合は false */
+  chrome?: boolean;
 }
 
 const {
@@ -16,6 +21,8 @@ const {
   ogDescription = description,
   canonicalPath = '/',
   ogImagePath = '/assets/logo_icon.jpg',
+  current = null,
+  chrome = true,
 } = Astro.props;
 
 const canonicalURL = new URL(canonicalPath, Astro.site).toString();
@@ -44,14 +51,83 @@ const ogImageURL = new URL(ogImagePath, Astro.site).toString();
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Sans+JP:wght@200;300;400;500&family=Noto+Serif+JP:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600&display=swap" rel="stylesheet" />
 
+<script is:inline>
+  /* 端末で「視差効果を減らす」を選んでいる人には、最初から止めて見せる */
+  (function () {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.dataset.motion = 'off';
+  })();
+</script>
 <slot name="head" />
 </head>
 <body>
+<a class="skip-link" href="#main">本文へスキップ</a>
+{chrome && <SiteHeader current={current} />}
+<main id="main">
 <slot />
-<script>
-  import '../scripts/motion.js';
+</main>
+{chrome && <SiteFooter />}
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    function motionOff() { return root.dataset.motion === 'off'; }
+
+    /* 見出しは中身を包んで、下からせり上がるようにする */
+    document.querySelectorAll('[data-reveal] h1.rv, [data-reveal] h2.rv, [data-reveal] h3.rv').forEach(function (h) {
+      h.classList.remove('rv'); h.classList.add('rv-mask');
+      h.innerHTML = '<span class="mask-in">' + h.innerHTML + '</span>';
+    });
+    /* 出現：区画ごとに1回。見出し→本文の順に 90ms ずつ（最大 5 段）、カードと手順は 120ms ずつ */
+    var els = document.querySelectorAll('[data-reveal]');
+    els.forEach(function (sec) {
+      sec.querySelectorAll('.rv, .rv-mask').forEach(function (el, i) { el.style.setProperty('--i', String(Math.min(i, 5))); });
+      sec.querySelectorAll('.cards, .flow').forEach(function (g) {
+        Array.prototype.forEach.call(g.children, function (el, j) { el.style.setProperty('--j', String(j)); });
+      });
+    });
+    if (motionOff() || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+    } else {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+      els.forEach(function (el) { io.observe(el); });
+      /* 念のため：位置でも確かめる（監視が働かない環境で中身が隠れたままにならないように） */
+      var check = function () {
+        var lim = innerHeight * 0.9;
+        els.forEach(function (el) { if (!el.classList.contains('in') && el.getBoundingClientRect().top < lim) el.classList.add('in'); });
+      };
+      addEventListener('scroll', check, { passive: true });
+      addEventListener('resize', check);
+      addEventListener('load', check);
+      setTimeout(check, 300);
+    }
+
+    /* 視差：紋章の見切れ・青海波だけ。±40px で止める。スマホ（hover なし）と「止める」では無効 */
+    var px = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+    var canHover = matchMedia('(hover: hover)').matches;
+    var ticking = false;
+    function para() {
+      ticking = false;
+      if (motionOff() || !canHover) { px.forEach(function (el) { el.style.transform = ''; }); return; }
+      var vh = innerHeight;
+      px.forEach(function (el) {
+        var host = el.parentElement.getBoundingClientRect();
+        if (host.bottom < -200 || host.top > vh + 200) return;
+        var k = parseFloat(el.getAttribute('data-parallax')) || 0.08;
+        var lim = k < 0.07 ? 24 : 40;
+        var d = ((host.top + host.height / 2) - vh / 2) * k;
+        d = Math.max(-lim, Math.min(lim, d));
+        el.style.transform = 'translateY(' + d.toFixed(1) + 'px)';
+      });
+    }
+    if (px.length) {
+      addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(para); } }, { passive: true });
+      addEventListener('resize', para); para();
+    }
+
+  })();
 </script>
 </body>
 </html>

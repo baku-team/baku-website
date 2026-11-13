@@ -1,0 +1,11 @@
+---
+// IPライセンスの絵（巻物に朱の落款・月に瑞雲・金の粒。Fable 作 2026-11-10）
+// 部品ごとに動かすため、画像ではなく SVG をそのまま埋め込む。
+import raw from '../assets/ip-wafu.svg?raw';
+interface Props { width?: number; class?: string }
+const { width = 540, class: cls = '' } = Astro.props;
+const svg = raw
+  .replace(/<svg ([^>]*?)width="720" height="528"([^>]*)>/, `<svg class="ip-svg ${cls}" $1 style="width:${width}px" $2>`)
+  .replace(/(<g id="seal"[^>]*>)([\s\S]*?)(\n\s*<\/g>)/, '$1<g class="seal-in">$2</g>$3');
+---
+<Fragment set:html={svg} />

@@ -1,0 +1,69 @@
+---
+import { SHOW_ISLAND, FORM_READY } from '../config';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Cloud from '../components/Cloud.astro';
+import FactTable from '../components/FactTable.astro';
+import ContactEntry from '../components/ContactEntry.astro';
+---
+<BaseLayout
+  title="会社概要 | 合同会社 貘"
+  description="合同会社 貘の法人情報、社名とロゴ、所在地です。"
+  canonicalPath="/company/"
+  current="company"
+>
+  <section class="sec sec--1 center page-head" aria-labelledby="ph" data-reveal>
+    <Cloud side="l" /><Cloud side="r" />
+    <div class="container">
+      <ol class="crumbs rv" aria-label="現在地"><li><a href="/">ホーム</a></li><li aria-current="page">会社概要</li></ol>
+      <span class="label rv">会社概要</span>
+      <h1 class="display rv" id="ph" style="margin-top:16px">法人情報</h1>
+      <p class="lead rv">合同会社 貘の、法人としての情報です。</p>
+    </div>
+  </section>
+
+  <section class="sec sec--2 paper" aria-label="法人情報" data-reveal>
+    <div class="container grid">
+      <div class="rv" style="grid-column:1 / span 8">
+        <FactTable rows={[
+          ['商号', '合同会社 貘（Baku LLC）'],
+          ['設立', '2026年10月'],
+          ['代表社員', '坂本 和哉'],
+          ['業務執行社員', '坂本 俊輔'],
+          ['本店所在地', '〒140-0001<br>東京都品川区北品川四丁目11-8 春雨寺1階<br><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E9%83%BD%E5%93%81%E5%B7%9D%E5%8C%BA%E5%8C%97%E5%93%81%E5%B7%9D%E5%9B%9B%E4%B8%81%E7%9B%AE11-8" rel="noopener">地図を開く ↗</a>'],
+          ['資本金', '10万円'],
+          ['法人番号', '7010703008530'],
+          ['事業内容', 'システムの開発と提供（業務AI「REVERSE」を含む）<br>知的財産（IP）のライセンス管理' + (SHOW_ISLAND ? '<br>島の動物診療所の運営管理' : '')],
+          ['連絡先', '<a href="mailto:baku@baku-llc.co.jp" class="en">baku@baku-llc.co.jp</a>'],
+        ]} caption="法人情報" />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--2 bg-lift" aria-labelledby="name-h" data-reveal>
+    <div class="container grid" style="align-items:center;row-gap:48px">
+      <div class="rv-fig" style="grid-column:1 / span 4;display:flex;justify-content:center">
+        <img class="seal-lg float float--slow" src="/assets/emblem.webp" alt="合同会社 貘のロゴ。象の鼻と牙、虎の脚を持つ貘の姿を、雲と波とともに円の中に描いている。" width="240" height="240" loading="lazy" />
+      </div>
+      <div style="grid-column:6 / span 7" class="measure">
+        <h2 class="h3 rv" id="name-h">社名とロゴについて</h2>
+        <p class="rv" style="margin-top:24px">貘は、悪い夢を食べるとされる想像上の動物です。人や組織が抱えきれないものを引き受ける仕事をしたい、という考えから、この名を付けました。</p>
+        <p class="rv" style="margin-top:16px">ロゴの貘は、象の鼻や虎の脚など、いくつもの動物を合わせた姿で描いています。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--2" aria-label="メンバーと所在地" data-reveal>
+    <div class="container grid" style="row-gap:48px">
+      <div style="grid-column:1 / span 6" class="measure">
+        <h2 class="h3 rv">メンバーについて</h2>
+        <p class="rv" style="margin-top:24px">運営するメンバーは獣医師で、動物病院の業務に通じています。システムのご相談では、総務・労務・連絡といった院内の仕事の流れを知ったうえで伺います。</p>
+      </div>
+      <div style="grid-column:8 / span 5">
+        <h2 class="h3 rv">所在地</h2>
+        <address class="rv" style="margin-top:24px;font-style:normal">〒140-0001<br />東京都品川区北品川四丁目11-8 春雨寺1階<br /><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E9%83%BD%E5%93%81%E5%B7%9D%E5%8C%BA%E5%8C%97%E5%93%81%E5%B7%9D%E5%9B%9B%E4%B8%81%E7%9B%AE11-8" rel="noopener">地図を開く ↗</a></address>
+      </div>
+    </div>
+  </section>
+
+  <ContactEntry text={FORM_READY ? "会社や事業について、お聞きになりたいことがあれば、お問い合わせフォームからお送りください。" : "会社や事業について、お聞きになりたいことがあれば、メールでお送りください。"} />
+</BaseLayout>

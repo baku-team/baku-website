@@ -1,0 +1,99 @@
+---
+// 島の動物診療（2026-11-10 坂本さん「島の事業入れてみて」）。
+// 11/8 の会食で「貘が診療所を運営する」方向。譲渡か運営委託か・契約は未定なので「話し合っています」と書く。
+// 島・診療所・人の名前は出さない。
+import IslandIllust from '../../components/IslandIllust.astro';
+import PageBg from '../../components/PageBg.astro';
+import { CLINIC_URL } from '../../config';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cloud from '../../components/Cloud.astro';
+import FactTable from '../../components/FactTable.astro';
+import ContactEntry from '../../components/ContactEntry.astro';
+---
+<BaseLayout
+  title="島の動物診療 | 合同会社 貘"
+  description="合同会社 貘は、獣医師が常駐しにくい島の動物診療所の運営と、島へ通う獣医師・看護師の手配、予約や記録などの事務を引き受け、島で診療が続く仕組みをつくります。"
+  canonicalPath="/business/03/"
+  current="island"
+>
+  <section class="sec sec--1 center page-head ov" aria-labelledby="ph" data-reveal style="z-index:2;padding-bottom:0">
+    <PageBg kind="moonroad" />
+    <Cloud side="l" /><Cloud side="r" />
+    <div class="container">
+      <ol class="crumbs rv" aria-label="現在地"><li><a href="/">ホーム</a></li><li aria-current="page">島の動物診療</li></ol>
+      <h1 class="display rv" id="ph">島の動物診療</h1>
+      <p class="lead rv">獣医師の少ない島で、動物の診療が続くように。</p>
+      <p class="note rv" style="margin-top:16px">最初の島は伊豆大島の「うみねこ診療所」です。運営の形を関係者と話し合っています。</p>
+      <div class="fig-wrap rv-fig drop-down" style="margin-top:48px">
+        <div class="float float--slow"><IslandIllust /></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--2 paper" aria-label="要点" data-reveal style="padding-top:128px">
+    <div class="container grid">
+      <div class="summary rv">
+        <FactTable rows={[
+          ['対象', '獣医師が常駐しにくい島の動物診療所と、島へ通う獣医師・看護師'],
+          ['引き受けること', '診療所の運営・獣医師と看護師の手配・予約や記録などの事務'],
+          ['ご相談', '<a href="/contact/">お問い合わせフォーム</a>から'],
+        ]} caption="島の動物診療の要点" />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--2" aria-labelledby="a1" data-reveal>
+    <div class="container">
+      <div class="grid row2">
+        <div class="a-head"><h2 class="h3 rv" id="a1">島の診療所と獣医師のあいだに立つ</h2></div>
+        <div class="a-body measure">
+          <p class="rv">島によっては、動物の診療所があっても獣医師が常駐できず、本土から通う獣医師の限られた日の診療で支えられているところがあります。通う人がひとり欠ければ、島の動物は診療を受けられなくなります。</p>
+          <p class="rv">合同会社 貘は、島の診療所の運営を引き受け、島へ通う獣医師・看護師を手配します。予約や記録といった事務は貘がまとめ、獣医師は診療に、島の飼い主は動物との暮らしに、それぞれ集中できるようにします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--2 bg-ink2" aria-labelledby="a2" data-reveal>
+    <div class="container">
+      <div class="head-l"><h2 class="h3 rv" id="a2">貘が担うこと</h2></div>
+      <div class="cards">
+        <article class="card"><span class="num">01</span><h3>人の手配</h3><p>島へ通う獣医師・看護師の、日程の調整と手配。</p></article>
+        <article class="card"><span class="num">02</span><h3>予約・問い合わせ</h3><p>診療日の予約の受付と、飼い主からの問い合わせへの対応。</p></article>
+        <article class="card"><span class="num">03</span><h3>在庫・記録・会計</h3><p>薬や物品の発注、診療の記録と会計を、通う獣医師が替わっても引き継げる形で。</p></article>
+      </div>
+      <p class="rv" style="margin-top:32px">事務は、貘が開発・提供する業務AI「REVERSE」で、ひとつにまとめて管理する計画です。</p>
+    </div>
+  </section>
+
+  <section class="sec sec--2" aria-label="これからとご相談" data-reveal>
+    <div class="container">
+      <div class="grid row2">
+        <div class="a-head"><h2 class="h3 rv">最初の島　伊豆大島</h2></div>
+        <div class="a-body measure">
+          <p class="rv">伊豆大島の「うみねこ診療所」では、本土から獣医師が通い、島の動物を診ています。診療日・予約・獣医師の募集は、診療所のサイトでご案内しています。</p>
+          <p class="rv"><a class="btn btn--primary" href={CLINIC_URL} target="_blank" rel="noopener">うみねこ診療所のサイトへ <span aria-hidden="true">↗</span><span class="vh">（新しいタブで開きます）</span></a></p>
+        </div>
+      </div>
+      <div class="grid row2">
+        <div class="a-head"><h2 class="h3 rv">ひとつの島から、いくつもの島へ</h2></div>
+        <div class="a-body measure">
+          <p class="rv">同じ仕組みで、いくつもの島の診療所を支えることを目指しています。島どうしで獣医師の日程や物品を融通し合えれば、一つひとつの島では難しかった診療も続けられるようになります。</p>
+        </div>
+      </div>
+      <div class="grid row2">
+        <div class="a-head"><h2 class="h3 rv">獣医師・看護師の方、島の診療所の方へ</h2></div>
+        <div class="a-body measure">
+          <p class="rv">島での診療に関わりたい獣医師・看護師の方、獣医師の確保にお困りの島の診療所・団体の方は、お問い合わせフォームからご連絡ください。</p>
+          <p class="rv"><a class="btn btn--primary" href="/contact/">お問い合わせフォームへ <span aria-hidden="true">→</span></a></p>
+        </div>
+      </div>
+      <nav class="pager rule-top" style="margin-top:64px;padding-top:24px" aria-label="ページ移動">
+        <a href="/business/01/">← 前の事業　IPライセンス</a>
+        <a href="/company/">会社概要 →</a>
+      </nav>
+    </div>
+  </section>
+
+  <ContactEntry heading="島での診療に関わるご相談を、お受けしています。" text="島へ通いたい獣医師・看護師の方、獣医師の確保にお困りの島の診療所の方は、お問い合わせフォームからお送りください。" />
+</BaseLayout>

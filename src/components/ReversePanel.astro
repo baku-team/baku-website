@@ -1,0 +1,52 @@
+---
+// 業務AI「REVERSE」への入口。砂時計のマーク（砂が落ち続ける）＋文字ロゴ＋製品サイトへのボタン。
+// 詳しい説明は製品サイトに任せ、HPには書かない。
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+import { REVERSE_URL as LP } from '../config';
+---
+<a class:list={['rv-panel', { 'rv-panel--compact': compact }]} href={LP} rel="noopener" aria-label="業務AI REVERSE の製品サイトへ（外部サイト）">
+  <span class="rv-glass" aria-hidden="true">
+    <img src="/assets/reverse-mark.webp" alt="" width="240" height="240" loading="lazy" />
+    <canvas class="rv-sand" width="240" height="240"></canvas>
+  </span>
+  <span class="rv-body">
+    <span class="rv-kicker">貘が開発・提供する業務AI</span>
+    <img class="rv-word" src="/assets/reverse-word.webp" alt="REVERSE" width="600" height="163" loading="lazy" />
+    <span class="rv-text">請求書の作成、予定の登録、議事録の作成など、事務の雑務をAIが引き受けるサービスです。{!compact && '料金・使い方・お申し込みは、製品サイトでご案内しています。'}</span>
+    <span class="rv-go">製品サイトへ <span aria-hidden="true">↗</span></span>
+  </span>
+</a>
+<script is:inline>
+  (function () {
+    /* 砂時計の砂：首（120,120）から山（約190）へ、細い流れが落ち続ける。画面に見えている間だけ描く */
+    var cs = document.querySelectorAll('.rv-sand');
+    cs.forEach(function (c) {
+      if (c.dataset.on) return; c.dataset.on = '1';
+      var g = c.getContext('2d'), P = [], vis = false, raf = 0, last = 0;
+      function off() { return document.documentElement.dataset.motion === 'off'; }
+      function spawn() {
+        P.push({ x: 120 + (Math.random() - 0.5) * 2.2, y: 118 + Math.random() * 3, v: 6 + Math.random() * 10,
+                 r: 0.5 + Math.random() * 0.75, a: 0.55 + Math.random() * 0.45, end: 186 + Math.random() * 8 });
+      }
+      function tick(t) {
+        raf = requestAnimationFrame(tick);
+        var dt = Math.min(0.05, (t - (last || t)) / 1000); last = t;
+        for (var k = 0; k < 3; k++) if (Math.random() < 0.9) spawn();
+        g.clearRect(0, 0, 240, 240);
+        for (var i = P.length - 1; i >= 0; i--) {
+          var p = P[i]; p.v += 240 * dt; p.y += p.v * dt; p.x += (Math.random() - 0.5) * 0.25;
+          if (p.y > p.end) { P.splice(i, 1); continue; }
+          var fade = p.y > p.end - 10 ? (p.end - p.y) / 10 : 1;
+          g.globalAlpha = p.a * fade; g.fillStyle = '#F3EEE4';
+          g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.283); g.fill();
+        }
+      }
+      function run() { if (vis && !off() && !raf) { last = 0; raf = requestAnimationFrame(tick); } }
+      function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) { vis = es[0].isIntersecting; vis ? run() : stop(); }).observe(c);
+      } else { vis = true; run(); }
+    });
+  })();
+</script>

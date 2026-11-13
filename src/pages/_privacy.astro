@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Cloud from '../components/Cloud.astro';
+// 【仮】全文を坂本さんに確認していただく。保管先・保管期間・制定日は未定。
+const items: [string, string][] = [
+  ['事業者', '合同会社 貘（東京都品川区北品川四丁目11-8 春雨寺1階）'],
+  ['取得する情報', 'お問い合わせフォームでお聞きする、お名前、会社名・団体名、メールアドレス、ご相談の内容。'],
+  ['利用目的', 'お問い合わせへのお返事と、ご相談への対応のためにだけ使います。'],
+  ['第三者への提供', '法令にもとづく場合を除き、ご本人の同意なく第三者に提供しません。'],
+  ['保管', 'お問い合わせフォームは、貘が開発・提供する業務AI「REVERSE」の受付ページで受け付けます。【仮：保管先と保管期間】'],
+  ['開示・訂正・削除', 'ご本人からの求めがあれば、確認のうえ対応します。ご連絡は <a href="mailto:baku@baku-llc.co.jp">baku@baku-llc.co.jp</a> へお送りください。'],
+  ['制定日', '【仮：公開日】'],
+];
+---
+<BaseLayout
+  title="プライバシーポリシー | 合同会社 貘"
+  description="合同会社 貘の、個人情報の取り扱いについて。"
+  canonicalPath="/privacy/"
+>
+  <section class="sec sec--1 center page-head" aria-labelledby="ph" data-reveal>
+    <Cloud side="r" />
+    <div class="container">
+      <ol class="crumbs rv" aria-label="現在地"><li><a href="/">ホーム</a></li><li aria-current="page">プライバシーポリシー</li></ol>
+      <span class="label rv">プライバシーポリシー</span>
+      <h1 class="display rv" id="ph" style="margin-top:16px">個人情報の取り扱いについて</h1>
+    </div>
+  </section>
+
+  <section class="sec sec--2 paper" aria-label="本文" data-reveal>
+    <div class="container">
+      {items.map(([h, b]) => (
+        <div class="grid row2 pp-row">
+          <div class="a-head"><h2 class="h4 rv">{h}</h2></div>
+          <div class="a-body measure"><p class="rv" set:html={b} /></div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

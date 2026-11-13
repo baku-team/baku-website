@@ -1,0 +1,19 @@
+---
+import { FORM_READY } from '../config';
+import Cloud from './Cloud.astro';
+import Waves from './Waves.astro';
+interface Props { heading?: string; text?: string }
+const {
+  heading = 'ご相談を、お受けしています。',
+  text = FORM_READY ? 'お問い合わせフォームからお送りください。担当者から、メールでお返事します。' : 'メールでお送りください。担当者から、メールでお返事します。',
+} = Astro.props;
+---
+<section class="sec sec--2 center" aria-labelledby="contact-entry-h" data-reveal>
+  <div data-parallax="0.05" style="position:absolute;inset:-24px 0;z-index:0"><Waves variant="full" /></div>
+  <Cloud side="r" />
+  <div class="container">
+    <h2 class="h2 rv" id="contact-entry-h">{heading}</h2>
+    <p class="rv" style="margin-top:24px">{text}</p>
+    <p class="rv"><a class="btn btn--primary" href="/contact/">{FORM_READY ? 'お問い合わせフォームへ' : 'お問い合わせへ'} <span aria-hidden="true">→</span></a></p>
+  </div>
+</section>

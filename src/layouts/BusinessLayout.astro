@@ -28,7 +28,7 @@ const {
   description,
 } = Astro.props;
 
-const TOTAL = 3; // 公開中の事業の数（非表示の事業は pages/business/_hidden-*.astro）
+const TOTAL = 2; // 公開中の事業の数（2026-11-10 イベントを外した）（非表示の事業は pages/business/_hidden-*.astro）
 const next = String(Math.min(TOTAL, Number(index) + 1)).padStart(2, '0');
 const prev = String(Math.max(1, Number(index) - 1)).padStart(2, '0');
 const hasNext = Number(index) < TOTAL;
@@ -38,30 +38,28 @@ const hasPrev = Number(index) > 1;
   title={title}
   description={description}
   canonicalPath={`/business/${index}/`}
+  chrome={false}
 >
   <a class="skip-link" href="#biz-detail">本文へスキップ</a>
 
   <header class="topbar">
-    <a class="mark" href="/">BAKU&nbsp;&nbsp;LLC</a>
+    <a class="mark" href="/"><img src="/assets/logo_icon.jpg" alt="" width="30" height="30" />合同会社 貘</a>
     <nav aria-label="グローバルナビゲーション">
-      <a href="/#about">About</a>
-      <a href="/#mission">Mission</a>
-      <a href="/#business">Business</a>
-      <a href="/#company">Company</a>
+      <a href="/#business">事業</a>
+      <a href="/#company">会社概要</a>
+      <a href="/#contact">お問い合わせ</a>
     </nav>
   </header>
 
   <main>
     <!-- Sub-page hero banner -->
-    <section class={`biz-hero ${tone}`} aria-labelledby="biz-detail-heading" data-clouds data-motes={tone === 'ink' ? '' : undefined}>
-      <span class="anchor">§ Business / {index} ・ {String(TOTAL).padStart(2, "0")}</span>
-      <span class="anchor right"><a class="back-link" href="/#business">← Back to Index</a></span>
+    <section class={`biz-hero ${tone}`} aria-labelledby="biz-detail-heading">
+      <span class="anchor right"><a class="back-link" href="/#business">事業一覧へ</a></span>
       <div class="frame">
-        <div class="num" aria-hidden="true">{kanji}</div>
         <div class="content">
-          <div class="reveal index">— {chapter} —</div>
-          <h1 class="reveal d1 en-title" id="biz-detail-heading">{enTitle}</h1>
-          <h2 class="reveal d2 ja-title">{jaTitle}</h2>
+          <div class="reveal index">事業 {index}</div>
+          <h1 class="reveal d1 ja-title ja-main" id="biz-detail-heading">{jaTitle}</h1>
+          <p class="reveal d2 en-sub">{enTitle}</p>
           <p class="reveal d3 bridge"><span>{bridge[0]}</span><b>貘</b><span>{bridge[1]}</span></p>
           <p class="reveal d3 lead">{lead}</p>
         </div>
@@ -83,14 +81,14 @@ const hasPrev = Number(index) > 1;
     <nav class="biz-pager" aria-label="事業ページの遷移">
       {hasPrev ? (
         <a class="pager-link prev" href={`/business/${prev}/`}>
-          <span class="pager-cap">Prev</span>
+          <span class="pager-cap">前の事業</span>
           <span class="pager-label">— {prev} —</span>
         </a>
       ) : <span class="pager-spacer" />}
       <a class="pager-home" href="/#business">事業一覧へ戻る</a>
       {hasNext ? (
         <a class="pager-link next" href={`/business/${next}/`}>
-          <span class="pager-cap">Next</span>
+          <span class="pager-cap">次の事業</span>
           <span class="pager-label">— {next} —</span>
         </a>
       ) : <span class="pager-spacer" />}
@@ -101,30 +99,28 @@ const hasPrev = Number(index) > 1;
     <div class="row">
       <div class="brand">
         貘
-        <small>BAKU &nbsp; LLC</small>
+        <small>合同会社 貘</small>
       </div>
       <div class="col">
-        <h6>Sitemap</h6>
-        <a href="/#about">About</a>
-        <a href="/#mission">Mission</a>
-        <a href="/#business">Business</a>
-        <a href="/#company">Company</a>
-        <a href="https://reverse-lp.pages.dev/">REVERSE ↗</a>
+        <h6>サイト内</h6>
+        <a href="/#business">事業</a>
+        <a href="/#company">会社概要</a>
+        <a href="/#contact">お問い合わせ</a>
+        <a href="https://reverse-lp.pages.dev/">REVERSE 製品サイト ↗</a>
       </div>
       <div class="col">
-        <h6>Contact</h6>
+        <h6>お問い合わせ</h6>
         <a href="mailto:baku@baku-llc.co.jp">baku@baku-llc.co.jp</a>
-        <p class="muted">For partnership / press inquiries.</p>
+        <p class="muted">事業のご相談・取材のご依頼はこちらへ。</p>
       </div>
       <div class="col">
-        <h6>Follow</h6>
-        <a href="#" aria-disabled="true" tabindex="-1">X &nbsp;— coming soon</a>
-        <a href="#" aria-disabled="true" tabindex="-1">Instagram &nbsp;— coming soon</a>
+        <h6>所在地</h6>
+        <p class="muted">〒140-0001<br />東京都品川区北品川四丁目11-8<br />春雨寺1階</p>
       </div>
     </div>
     <div class="copy">
-      <span>© 2026 Baku LLC.&nbsp;&nbsp;All rights reserved.</span>
-      <span>合 同 会 社 　 貘</span>
+      <span>© 2026 Baku LLC.</span>
+      <span>法人番号 7010703008530</span>
     </div>
   </footer>
 

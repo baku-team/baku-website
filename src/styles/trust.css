@@ -1,0 +1,179 @@
+/* =====================================================================
+   trust.css — 2026-11-10
+   元のデザイン（藍・生成り・真鍮、明朝、紋章、オープニング動画）は残し、
+   「怪しく見える」要素だけを上書きで取り除く。理由は計画書の分析を参照。
+   ===================================================================== */
+
+/* ---------- A. 読みやすさ（処理の流暢さ） ----------
+   和文の字間 .2〜.9em・9〜13px の小さな文字・真鍮色の細い文字は、
+   読む負担を上げ、内容が「本当らしくない」と感じさせる。
+   本文は 16px 前後・字間 .04〜.08em、見出しは .06〜.12em に収める。 */
+.about .sub,
+.mission .lines p.body,
+.biz .lead,
+.biz .note,
+.biz-detail p,
+.biz-detail li,
+.biz-detail .muted,
+.company .grid dd {
+  letter-spacing: .06em;
+}
+.about .sub        { font-size: clamp(16px, 1.4vw, 18px); line-height: 2; color: var(--ink); }
+.mission .lines p.body { font-size: clamp(16px, 1.4vw, 18px); line-height: 2.1; letter-spacing: .08em; }
+.biz .note         { font-size: 16px; line-height: 2; }
+.biz-detail .muted { font-size: 15px; line-height: 2; }
+.company .grid dd  { font-size: 16px; }
+
+.about .copy,
+.mission .lines    { letter-spacing: .08em; }
+.biz .ja-title,
+.biz-hero .ja-title,
+.biz-detail h3.block-title,
+.biz-detail .coming-soon h4 { letter-spacing: .1em; }
+
+/* 主見出しは日本語。英語は小さな添え書きにする */
+.ja-main {
+  font-family: var(--serif-jp);
+  font-weight: 400;
+  font-size: clamp(30px, 4vw, 48px) !important;
+  letter-spacing: .12em !important;
+  line-height: 1.4;
+}
+.ja-main::before, .ja-main::after { display: none !important; }
+.en-sub {
+  margin: -12px 0 0;
+  font-family: var(--serif-en);
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: .16em;
+  color: var(--brass);
+}
+.light .en-sub { color: #8a6d35; }
+
+/* 斜体（イタリック）はやめて立てる */
+.eyebrow, .biz .index, .biz-hero .index, .divider, .company .grid dt,
+footer .brand small, footer .col h6, .biz-link::after,
+.biz-detail ol.bullets li::before, .biz-detail .kv dt, .biz-detail .pill .label,
+.biz-detail .quote, .biz-detail .form-note h4, .biz-detail .roster-mark,
+.biz-detail .roster-label, .biz-detail .roster-name small,
+.biz-detail .coming-soon h4, .biz-pager .pager-cap {
+  font-style: normal !important;
+}
+
+/* 小見出し・ラベルは日本語で、読める大きさに */
+.eyebrow,
+.biz .index,
+.biz-hero .index {
+  font-family: var(--sans, "Noto Sans JP", sans-serif);
+  font-size: 14px;
+  letter-spacing: .2em;
+  color: var(--brass);
+}
+.light .biz .index, .biz.light .index { color: #8a6d35; }
+
+/* 生成りの上の真鍮色の細字は読めない（コントラスト約2:1）→ 墨色に */
+.company .grid dt {
+  font-family: var(--sans, "Noto Sans JP", sans-serif);
+  font-size: 14px;
+  letter-spacing: .12em;
+  color: var(--sumi);
+}
+
+/* ---------- B. 神秘・霊感を連想させる飾りを外す ----------
+   回る文字の輪、浮かぶ紋章、金の粒・花びら、月の輪、
+   大きな薄い漢数字（壱・弐）、§ 記号と英語の章番号。 */
+.emblem-ring,
+.biz .num, .biz-hero .num,
+.anchor:not(.right),
+.chapter-rail,
+.ring, .moon, .motes, .mote, .petal, .cloud { display: none !important; }
+.emblem .disc { animation: none !important; }
+.mission .emblem::before { display: none; }
+.bridge, .bridge * { animation: none !important; }
+.divider > span { display: none; }
+.biz-detail .block-eyebrow { display: none; }
+
+/* ---------- C. 動き：出てくるまでの空白をなくす ----------
+   一文字ずつの表示と 1.4 秒の遅い表示は、画面が空のまま待たせる。 */
+.reveal { transition-duration: .7s, .7s !important; }
+.reveal.d1, .reveal.d2, .reveal.d3, .reveal.d4, .reveal.d5, .reveal.d6 { transition-delay: 0s !important; }
+.company .grid > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+/* ---------- D. ヘッダー：社名は日本語、英字の字間を詰める ---------- */
+.topbar { font-family: var(--sans, "Noto Sans JP", sans-serif); font-size: 14px; letter-spacing: .1em; }
+.topbar .mark {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--serif-jp); font-size: 16px; font-weight: 500; letter-spacing: .14em;
+}
+.topbar .mark img { width: 30px; height: 30px; border-radius: 50%; }
+.topbar nav { gap: 32px; }
+@media (max-width: 720px) {
+  .topbar .mark { font-size: 15px; }
+  .topbar nav { display: flex; gap: 18px; font-size: 13px; }
+}
+
+/* ---------- E. 事実を最初に（About の下に設立・本店・法人番号） ---------- */
+.facts {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 36px;
+  margin: 48px auto 0; padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  width: min(640px, 100%);
+  font-size: 15px; letter-spacing: .06em;
+}
+.facts div { display: flex; gap: 10px; }
+.facts dt { color: var(--sumi); }
+.facts dd { margin: 0; color: var(--ink); }
+
+/* ---------- F. お問い合わせの区画（新設） ---------- */
+.contact-sec {
+  background: var(--ink); color: var(--paper);
+  text-align: center;
+  padding: clamp(96px, 14vh, 160px) clamp(24px, 6vw, 64px);
+}
+.contact-title {
+  font-family: var(--serif-jp); font-weight: 300;
+  font-size: clamp(24px, 3vw, 36px); letter-spacing: .1em; line-height: 1.8;
+  margin: 24px 0 32px;
+}
+.contact-mail a {
+  font-family: var(--serif-en); font-size: clamp(22px, 2.6vw, 30px); letter-spacing: .04em;
+  color: var(--paper); text-decoration: none; border-bottom: 1px solid var(--brass); padding-bottom: 4px;
+}
+.contact-mail a:hover { color: var(--brass); }
+.contact-note { margin-top: 32px; font-size: 15px; line-height: 2; letter-spacing: .06em; color: rgba(248,245,238,.82); }
+.br-sp { display: inline; }
+@media (min-width: 721px) { .br-sp { display: none; } }
+
+/* ---------- G. フッター：英語の見出しと「近日公開」をやめた分の調整 ---------- */
+footer .brand small { font-family: var(--sans, "Noto Sans JP", sans-serif); font-size: 13px; letter-spacing: .14em; }
+footer .col h6 { font-family: var(--sans, "Noto Sans JP", sans-serif); font-size: 13px; letter-spacing: .16em; }
+footer .col a, footer .col p { font-size: 14px; letter-spacing: .06em; line-height: 1.9; }
+footer .copy { font-size: 12px; letter-spacing: .08em; }
+footer .copy span:last-child { letter-spacing: .08em; }
+
+/* 「詳しく見る」を日本語に */
+.biz-link::after {
+  content: "詳しく見る　→" !important;
+  font-family: var(--sans, "Noto Sans JP", sans-serif) !important;
+  font-size: 14px !important; letter-spacing: .14em !important;
+}
+.biz-pager .pager-cap { font-family: var(--sans, "Noto Sans JP", sans-serif); font-size: 13px; letter-spacing: .14em; }
+.biz-hero .back-link { letter-spacing: .14em; font-size: 14px; }
+
+/* 2026-11-10 追記：見出しに重なる縦線を外す／フッターの細字を読める字に */
+.mission .rule-v { display: none; }
+footer .copy { font-family: var(--sans, "Noto Sans JP", sans-serif); font-size: 13px; letter-spacing: .06em; }
+
+/* 2026-11-10 オープニング：紋章ができあがったあとは静止画＋花びら */
+.hero .hero-still, .hero .hero-petals {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; pointer-events: none;
+  opacity: 0; transition: opacity .35s linear;
+}
+.hero .hero-still.on, .hero .hero-petals.on { opacity: .92; }
+.hero .hero-petals.on { opacity: 1; }
+.hero .veil, .hero .scroll-cue { z-index: 2; }
+@media (prefers-reduced-motion: reduce) {
+  .hero .hero-still { opacity: .92; }
+}
+.hero.handed video { opacity: 0 !important; transition: opacity .35s linear; }

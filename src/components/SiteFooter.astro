@@ -1,0 +1,40 @@
+---
+import { SHOW_ISLAND, SHOW_PRIVACY } from '../config';
+import { REVERSE_URL } from '../config';
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="grid ft-cols">
+      <div>
+        <div class="ft-brand"><img src="/assets/logo_icon.jpg" alt="" width="32" height="32" /><b>合同会社 貘</b></div>
+        <p class="ft-sub">Baku LLC</p>
+      </div>
+      <div>
+        <p class="ft-h">事業</p>
+        <ul>
+          <li><a href="/business/02/">システム開発</a></li>
+          <li><a href="/business/01/">IPライセンス</a></li>
+          {SHOW_ISLAND && <li><a href="/business/03/">島の動物診療</a></li>}
+        </ul>
+      </div>
+      <div>
+        <p class="ft-h">会社</p>
+        <ul>
+          <li><a href="/company/">会社概要</a></li>
+          <li><a href="/contact/">お問い合わせ</a></li>
+          {SHOW_PRIVACY && <li><a href="/privacy/">プライバシーポリシー</a></li>}
+          <li><a href={REVERSE_URL} rel="noopener">REVERSE 製品サイト ↗<span class="vh">（外部サイト）</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="ft-h">所在地と連絡先</p>
+        <address>〒140-0001<br />東京都品川区北品川四丁目11-8 春雨寺1階</address>
+        <ul><li><a class="en" href="mailto:baku@baku-llc.co.jp">baku@baku-llc.co.jp</a></li></ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span class="en">© 2026 Baku LLC.</span>
+      <span>法人番号 <span class="en">7010703008530</span></span>
+    </div>
+  </div>
+</footer>

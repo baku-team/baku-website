@@ -240,13 +240,10 @@ function buildRail(chapters) {
 function init() {
   injectDefs();
 
-  $$('[data-moon], [data-waves], [data-clouds], [data-motes]').forEach(decorate);
+  // 2026-11-10：月の輪・金の粒・花びら・雲・一文字ずつの表示は外す（青海波だけ残す）
+  $$('[data-waves]').forEach(decorate);
 
-  const rings = $$('.biz .frame, .biz-hero .frame').map(addRing);
-
-  if (!reduce) {
-    $$('.about .copy, .mission .lines p:not(.body), .biz .en-title, .biz-hero .en-title').forEach(splitChars);
-  }
+  const rings = [];
 
   $$('.company .grid > *').forEach((el, k) => el.style.setProperty('--i', String(k)));
 
@@ -266,7 +263,8 @@ function init() {
   }
 
   const chapters = $$('main > section.biz');
-  if (chapters.length > 1) buildRail(chapters);
+  // 章の目次（横のレール）も外す（2026-11-10）
+  void chapters;
 
   if (reduce) return;
 

@@ -1,125 +1,100 @@
 ---
-import BusinessLayout from '../../layouts/BusinessLayout.astro';
+import SysIllust from '../../components/SysIllust.astro';
+import PageBg from '../../components/PageBg.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cloud from '../../components/Cloud.astro';
+import FactTable from '../../components/FactTable.astro';
+import ContactEntry from '../../components/ContactEntry.astro';
+import { REVERSE_URL, FORM_READY } from '../../config';
 ---
-<BusinessLayout
-  index="02"
-  kanji="弐"
-  chapter="Chapter Two"
-  enTitle="REVERSE"
-  jaTitle="AIの電子秘書"
-  bridge={['開発者', '事業者']}
-  lead="報告・記録・集計・連絡を、頼めば最後まで。人を増やさずに、会社が回る。"
-  tone="ink"
-  title="REVERSE（AIの電子秘書） | 合同会社 貘"
-  description="合同会社 貘は、雑務を片づけるAIの電子秘書「REVERSE」を開発・提供しています。販売・契約・導入・問い合わせの窓口を貘が担います。"
+<BaseLayout
+  title="システム開発 | 合同会社 貘"
+  description="合同会社 貘は、業務システム・Web・アプリの開発と、使い始めてからの運用を引き受けます。業務AI「REVERSE」を開発・提供しています。"
+  canonicalPath="/business/02/"
+  current="system"
 >
-  <div class="container">
+  <section class="sec sec--1 center page-head" aria-labelledby="ph" data-reveal>
+    <PageBg kind="dots" />
+    <Cloud side="l" /><Cloud side="r" />
+    <div class="container">
+      <ol class="crumbs rv" aria-label="現在地"><li><a href="/">ホーム</a></li><li aria-current="page">システム開発</li></ol>
+      <h1 class="display rv" id="ph">システム開発</h1>
+      <p class="lead rv">業務を動かすシステムを、作るところから運用まで。</p>
+      <p class="rv" style="margin-top:16px">業務システム・Web・アプリを必要とする事業者のご相談をお受けしています。</p>
+    </div>
+  </section>
 
-    <section class="block reveal">
-      <span class="block-eyebrow">— Overview —</span>
-      <h3 class="block-title">雑務を<wbr>片づける電子秘書</h3>
-      <p>
-        REVERSEは、御社名義の<wbr>サーバーで<wbr>働くAIの<wbr>電子秘書です。
-        「まとめて提出して」「送っておいて」と<wbr>結果だけを<wbr>頼めば、
-        報告・記録・集計・連絡を<wbr>最後まで<wbr>片づけます。
-        パソコンの<wbr>画面からも、LINEやDiscordからも<wbr>頼めます。
-      </p>
-      <p class="muted">雑務に<wbr>取られていた時間を、本来の<wbr>仕事へ<wbr>戻す。名前の REVERSE には、その<wbr>意味を<wbr>込めています。</p>
-    </section>
+  <!-- 要点の表（生成り）＋からくり帳場の絵 -->
+  <section class="sec sec--2 paper ov" aria-label="要点" data-reveal>
+    <div class="container grid" style="align-items:center;row-gap:32px">
+      <div class="rv" style="grid-column:1 / span 7">
+        <FactTable rows={[
+          ['対象', '業務システム・Web・アプリを必要とする事業者'],
+          ['引き受けること', '開発・AIによる事務作業の自動化・運用と保守'],
+          ['自社サービス', `業務AI「REVERSE」（<a href="${REVERSE_URL}" rel="noopener">製品サイトへ ↗</a>）`],
+          ['ご相談', FORM_READY ? '<a href="/contact/">お問い合わせフォーム</a>から' : '<a href="/contact/">メール</a>で'],
+        ]} caption="システム開発の要点" />
+      </div>
+      <div class="fig-wrap rv-fig" style="grid-column:8 / span 5">
+        <div class="float float--slow"><SysIllust width={420} /></div>
+      </div>
+    </div>
+  </section>
 
-    <section class="block reveal">
-      <span class="block-eyebrow">— Role —</span>
-      <h3 class="block-title">開発者と<wbr>事業者のあいだに<wbr>立つ</h3>
-      <p>
-        REVERSEは、開発者の<wbr>技術を、事業者が<wbr>日々の<wbr>仕事で<wbr>使える形にしたサービスです。
-        合同会社 貘は、販売・契約・導入の<wbr>支援・お問い合わせの<wbr>窓口を<wbr>担い、
-        開発者は<wbr>技術に、事業者は<wbr>本来の<wbr>仕事に<wbr>集中できるようにしています。
-      </p>
-    </section>
-
-    <section class="block reveal">
-      <span class="block-eyebrow">— Tasks —</span>
-      <h3 class="block-title">片づけられる雑務の<wbr>例</h3>
-      <div class="pillgrid">
-        <div class="pill">
-          <span class="label">Office</span>
-          <strong>経理・事務</strong><br />
-          売上の<wbr>集計、レジ締めの<wbr>記録、領収書の<wbr>写真からの<wbr>経費の<wbr>記帳。
-        </div>
-        <div class="pill">
-          <span class="label">Customers</span>
-          <strong>顧客・営業</strong><br />
-          名刺の<wbr>写真から顧客一覧への<wbr>登録、担当ごとの<wbr>メール送信、顧客ごとの<wbr>月次レポート。
-        </div>
-        <div class="pill">
-          <span class="label">Meetings</span>
-          <strong>会議・予定</strong><br />
-          商談メモからの<wbr>議事録、やることの<wbr>期限つきの<wbr>登録、空き時間の<wbr>確認と<wbr>予定の<wbr>登録。
-        </div>
-        <div class="pill">
-          <span class="label">Front desk</span>
-          <strong>窓口・人事</strong><br />
-          問い合わせの<wbr>仕分けと<wbr>記録、問い合わせへの<wbr>返信、研修の<wbr>期限が<wbr>近い人への<wbr>案内。
+  <section class="sec sec--2" aria-label="内容" data-reveal>
+    <div class="container">
+      <div class="grid row2">
+        <div class="a-head"><h2 class="h3 rv">開発者と事業者のあいだに立つ</h2></div>
+        <div class="a-body measure">
+          <p class="rv">業務を動かすシステムを、作るところから、使い始めたあとの運用まで引き受けます。開発は提携する開発者が担い、合同会社 貘は、ご相談・契約・導入・お問い合わせの窓口をひとつにまとめます。</p>
+          <p class="rv">自社では、業務AI「REVERSE」を開発し、提供しています。開発から運用までを自分たちで続けている経験を、ご相談にも生かします。</p>
+          <p class="muted rv">運営するメンバーは獣医師です。動物病院の院内の業務（総務・労務・連絡）にも通じています。</p>
         </div>
       </div>
-      <p class="muted">※ いずれも<wbr>当社の<wbr>環境で、最後まで<wbr>動くことを<wbr>確かめた業務です。</p>
-    </section>
+    </div>
+  </section>
 
-    <section class="block reveal">
-      <span class="block-eyebrow">— Approach —</span>
-      <h3 class="block-title">任せ方</h3>
-      <ul class="bullets">
-        <li>頼むのは<wbr>結果だけ。手順を<wbr>教える必要はありません。</li>
-        <li>秘書が<wbr>働くサーバーも、データも、御社のものです。</li>
-        <li>メールの<wbr>送信など大事な操作は、人が<wbr>確かめてから進めます。</li>
-      </ul>
-    </section>
+  <section class="sec sec--2 bg-ink2" aria-labelledby="take-h" data-reveal>
+    <div class="container">
+      <div class="head-l"><h2 class="h3 rv" id="take-h">引き受けること</h2></div>
+      <div class="cards">
+        <article class="card"><span class="num">01</span><h3>開発</h3><p>業務システム・Webサイト・アプリを作ります。</p></article>
+        <article class="card"><span class="num">02</span><h3>自動化</h3><p>AIを使って、事務の作業を自動にします。</p></article>
+        <article class="card"><span class="num">03</span><h3>運用</h3><p>使い始めてからの運用と保守、使い方のご相談を続けます。</p></article>
+      </div>
+      <p class="rv" style="margin-top:32px">作る前に、いまの業務の流れと困っていることを伺います。</p>
+    </div>
+  </section>
 
-    <section class="block reveal">
-      <span class="block-eyebrow">— Plans —</span>
-      <h3 class="block-title">料金</h3>
-      <p>
-        月額・1団体の<wbr>定額で、使う人数は<wbr>問いません。
-        会社で<wbr>使うなら、Proひとつで<wbr>足ります。
-      </p>
-      <dl class="kv">
-        <dt>Free</dt>
-        <dd>0円</dd>
-        <dt>Pro</dt>
-        <dd>29,000円</dd>
-        <dt>Max</dt>
-        <dd>49,000円</dd>
-        <dt>NonProfit</dt>
-        <dd>0円（NPO・PTA・自治会などの<wbr>非営利団体。審査制）</dd>
-      </dl>
-      <p class="muted">※ 金額は<wbr>税抜の<wbr>月額です。サーバーと<wbr>AIの<wbr>利用料は<wbr>実費として、各社へ<wbr>直接お支払いいただきます。Proは<wbr>1か月の<wbr>無料体験があります。</p>
-    </section>
+  <section class="sec sec--2" aria-labelledby="flow-h" data-reveal>
+    <div class="container">
+      <div class="head-l"><h2 class="h3 rv" id="flow-h">進め方</h2></div>
+      <ol class="flow">
+        <li><span class="n">1</span><b>ご相談</b><span>いまの業務と、困っていること</span></li>
+        <li><span class="n">2</span><b>ご提案</b><span>作るものと費用</span></li>
+        <li><span class="n">3</span><b>契約</b><span>内容と費用を決めて契約</span></li>
+        <li><span class="n">4</span><b>開発</b><span>途中で確かめながら作る</span></li>
+        <li><span class="n">5</span><b>運用</b><span>引き渡しと、その後の運用</span></li>
+      </ol>
+      <p class="note rv" style="margin-top:24px">費用は、作るものの内容と規模に応じてお見積りします。</p>
+    </div>
+  </section>
 
-    <section class="block reveal">
-      <span class="block-eyebrow">— For —</span>
-      <h3 class="block-title">こんな事業者に</h3>
-      <ul class="bullets">
-        <li>動物病院など、少ない人数で<wbr>現場と<wbr>事務を<wbr>回している事業者</li>
-        <li>営業代行・業務代行など、取引先ごとの<wbr>記録や報告が<wbr>多い事業者</li>
-        <li>NPO・PTA・自治会など、ボランティアで<wbr>運営している団体</li>
-      </ul>
-      <p class="muted">運営する当社の<wbr>メンバーは<wbr>獣医師です。動物病院の<wbr>院内の<wbr>業務（総務・労務・連絡）にも<wbr>通じています。</p>
-    </section>
+  <section class="sec sec--3 rule-top" aria-labelledby="rv-h" data-reveal>
+    <div class="container">
+      <div class="grid row2">
+        <div class="a-head"><h2 class="h3 rv" id="rv-h">自社のサービス</h2></div>
+        <div class="a-body measure">
+          <p class="rv">業務AI「REVERSE」は、請求書の作成、予定の登録、議事録の作成など、事務の雑務をAIが引き受けるサービスです。料金・使い方・お申し込みは、製品サイトでご案内しています。</p>
+          <p class="rv"><a class="btn" href={REVERSE_URL} rel="noopener">REVERSE 製品サイトへ <span aria-hidden="true">↗</span><span class="vh">（外部サイト）</span></a></p>
+        </div>
+      </div>
+      <nav class="pager rule-top" style="margin-top:64px;padding-top:24px" aria-label="ページ移動">
+        <a href="/">← トップへ</a>
+        <a class="btn" style="margin-top:0" href="/business/01/">次の事業　IPライセンス <span aria-hidden="true">→</span></a>
+      </nav>
+    </div>
+  </section>
 
-    <section class="block reveal">
-      <span class="block-eyebrow">— Contact —</span>
-      <h3 class="block-title">導入のご相談</h3>
-      <p>
-        くわしい使い方・料金・お申し込みは、REVERSEの<wbr>公式サイトをご覧ください。
-      </p>
-      <p class="muted">REVERSEを<wbr>土台にした、事業の<wbr>運営の<wbr>システム化のご相談もお受けしています。</p>
-      <p>
-        <a class="contact-link" href="https://reverse-lp.pages.dev/" style="color:inherit;border-bottom:1px solid var(--brass);">REVERSE 公式サイト →</a>
-      </p>
-      <p>
-        <a class="contact-link" href="mailto:baku@baku-llc.co.jp" style="color:inherit;border-bottom:1px solid var(--brass);">baku@baku-llc.co.jp</a>
-      </p>
-    </section>
-
-  </div>
-</BusinessLayout>
+  <ContactEntry heading="システム開発のご相談を、お受けしています。" text="いまの業務と、困っていることを、わかる範囲でお知らせください。" />
+</BaseLayout>

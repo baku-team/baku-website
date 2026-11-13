@@ -1,0 +1,10 @@
+---
+// システム開発の絵「からくり帳場」（2026-11-11 Fable 案1・坂本さん選定）。作り方は tools/sys/gen.mjs。
+// 部品ごとに動かすため SVG をそのまま埋め込む。雲・月の動きは IP・島の絵と共通（.ip-svg）、ほかは .sys-svg。
+import raw from '../assets/sys-wafu.svg?raw';
+interface Props { width?: number }
+const { width = 540 } = Astro.props;
+const svg = raw.replace(/<svg\b([^>]*)>/, (_m: string, a: string) =>
+  `<svg class="ip-svg sys-svg" style="width:${width}px"${a.replace(/\s(width|height|class|style)="[^"]*"/g, '')}>`);
+---
+<Fragment set:html={svg} />

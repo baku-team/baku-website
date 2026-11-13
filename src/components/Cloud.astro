@@ -1,0 +1,14 @@
+---
+interface Props { side: 'l' | 'r' }
+const { side } = Astro.props;
+const CLOUD_PATH =
+  'M40 92 C18 92 10 74 24 64 C14 50 30 34 48 42 C50 22 78 16 92 32 C104 12 140 14 146 38 ' +
+  'C168 32 186 50 176 68 C196 72 196 92 174 92 Z ' +
+  'M92 32 C96 44 88 54 78 50 C70 47 72 38 80 38 ' +
+  'M146 38 C140 52 150 60 158 56 C165 52 162 44 156 45 ' +
+  'M48 42 C56 50 52 60 44 60 C38 60 37 53 42 52 ' +
+  'M40 92 C10 96 -10 112 -40 106';
+---
+<div class={`cloud cloud--${side}`} aria-hidden="true">
+  <svg viewBox="-40 0 240 120"><g transform={side === 'r' ? 'scale(-1,1) translate(-200,0)' : undefined}><path d={CLOUD_PATH} /></g></svg>
+</div>

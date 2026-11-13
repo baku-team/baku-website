@@ -1,84 +1,94 @@
 ---
-import BusinessLayout from '../../layouts/BusinessLayout.astro';
+import { SHOW_ISLAND, FORM_READY } from '../../config';
+import IpIllust from '../../components/IpIllust.astro';
+import PageBg from '../../components/PageBg.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cloud from '../../components/Cloud.astro';
+import FactTable from '../../components/FactTable.astro';
+import ContactEntry from '../../components/ContactEntry.astro';
 ---
-<BusinessLayout
-  index="01"
-  kanji="壱"
-  chapter="Chapter One"
-  enTitle="IP License"
-  jaTitle="I P ライセンス"
-  bridge={['権利者', '企業']}
-  lead="非営利団体などが持つキャラクターの権利を、企業が使える形に。"
-  tone="light"
-  title="IPライセンスの管理 | 合同会社 貘"
-  description="合同会社 貘は、権利者からキャラクター・ブランドの権利の管理を預かり、使いたい企業への使用許諾を担う管理会社です。現在は準備中で、管理委託・商用利用のご相談を受け付けています。"
+<BaseLayout
+  title="IPライセンス | 合同会社 貘"
+  description="合同会社 貘は、キャラクターの権利を預かり、使いたい企業との契約と、ロイヤリティの受け渡しまでを引き受けます。"
+  canonicalPath="/business/01/"
+  current="ip"
 >
-  <div class="container">
+  <section class="sec sec--1 center page-head ov" aria-labelledby="ph" data-reveal style="z-index:2;padding-bottom:0">
+    <PageBg kind="ripple" />
+    <Cloud side="l" /><Cloud side="r" />
+    <div class="container">
+      <ol class="crumbs rv" aria-label="現在地"><li><a href="/">ホーム</a></li><li aria-current="page">IPライセンス</li></ol>
+      <h1 class="display rv" id="ph">IPライセンス</h1>
+      <p class="lead rv">キャラクターの権利（IP）を、企業が使える形に。</p>
+      <p class="note rv" style="margin-top:16px">現在は準備中です。管理委託・商用利用のご相談は受け付けています。</p>
+      <div class="fig-wrap rv-fig drop-down" style="margin-top:48px">
+        <div class="float float--slow"><IpIllust /></div>
+      </div>
+    </div>
+  </section>
 
-    <section class="block reveal">
-      <span class="block-eyebrow">— Overview —</span>
-      <h3 class="block-title">権利者と<wbr>企業のあいだに<wbr>立つ</h3>
-      <p>
-        非営利団体などの<wbr>権利者は、キャラクターを<wbr>持っていても、
-        自ら商品化やライセンスの<wbr>事業を<wbr>行うことが<wbr>難しい場合があります。
-        合同会社 貘は、権利者から権利の<wbr>管理を<wbr>預かり、
-        使いたい企業との<wbr>契約と、ロイヤリティの<wbr>受け渡しまでを<wbr>引き受けます。
-      </p>
-      <p>
-        権利者は<wbr>本来の<wbr>活動に<wbr>専念でき、企業はひとつの<wbr>窓口で、安心して権利を<wbr>使えます。
-      </p>
-    </section>
+  <section class="sec sec--2 paper" aria-label="要点" data-reveal style="padding-top:128px">
+    <div class="container grid">
+      <div class="summary rv">
+        <FactTable rows={[
+          ['対象', 'キャラクターの権利者と、それを使いたい企業'],
+          ['引き受けること', '権利の管理・使用許諾の契約・ロイヤリティの受け渡し'],
+          ['ご相談', FORM_READY ? '<a href="/contact/">お問い合わせフォーム</a>から' : '<a href="/contact/">メール</a>で'],
+        ]} caption="IPライセンスの要点" />
+      </div>
+    </div>
+  </section>
 
-    <section class="block reveal">
-      <span class="block-eyebrow">— Role —</span>
-      <h3 class="block-title">貘が<wbr>担うこと</h3>
-      <div class="pillgrid">
-        <div class="pill">
-          <span class="label">Management</span>
-          商標・著作権の<wbr>管理と、使い方の<wbr>決まりの<wbr>運用
-        </div>
-        <div class="pill">
-          <span class="label">License</span>
-          企業からの<wbr>申し込みの<wbr>受付と、使用許諾の<wbr>契約
-        </div>
-        <div class="pill">
-          <span class="label">Royalty</span>
-          使用状況の<wbr>確認と、ロイヤリティの<wbr>受け渡し
+  <section class="sec sec--2" aria-labelledby="a1" data-reveal>
+    <div class="container">
+      <div class="grid row2">
+        <div class="a-head"><h2 class="h3 rv" id="a1">権利者と企業のあいだに立つ</h2></div>
+        <div class="a-body measure">
+          <p class="rv">キャラクターの権利者は、作品を持っていても、自ら商品化やライセンスの事業を行うことが難しい場合があります。</p>
+          <p class="rv">合同会社 貘は、権利者から権利の管理を預かり、使いたい企業との契約と、ロイヤリティの受け渡しまでを引き受けます。権利者は本来の活動に専念でき、企業はひとつの窓口で権利を使えます。</p>
+          <p class="muted rv">現在は準備中で、権利者との管理委託の取り決めに向けて準備を進めています。取扱いが決まったIPは、このページでお知らせします。</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="block reveal">
-      <span class="block-eyebrow">— Status —</span>
-      <h3 class="block-title">現在の<wbr>状況</h3>
-      <div class="coming-soon">
-        <h4>Coming Soon</h4>
-        <p>
-          現在、権利者との<wbr>管理委託の<wbr>取り決めに<wbr>向けて準備を<wbr>進めています。
-          取扱いが<wbr>決まったIPは、本ページでお知らせします。
-        </p>
+  <section class="sec sec--2 bg-ink2" aria-labelledby="a2" data-reveal>
+    <div class="container">
+      <div class="head-l"><h2 class="h3 rv" id="a2">貘が担うこと</h2></div>
+      <div class="cards">
+        <article class="card"><span class="num">01</span><h3>管理</h3><p>商標・著作権の管理と、使い方の決まりの運用。</p></article>
+        <article class="card"><span class="num">02</span><h3>使用許諾</h3><p>企業からの申し込みの受付と、使用許諾の契約。</p></article>
+        <article class="card"><span class="num">03</span><h3>ロイヤリティ</h3><p>使用状況の確認と、ロイヤリティの受け渡し。</p></article>
       </div>
-      <p class="muted">※ ロイヤリティ・手数料は、利用の<wbr>形・期間・販路の<wbr>規模に<wbr>応じて個別にご相談します。</p>
-    </section>
+    </div>
+  </section>
 
-    <section class="block reveal">
-      <span class="block-eyebrow">— Inquiry —</span>
-      <h3 class="block-title">管理委託・商用利用のご相談</h3>
-      <div class="form-note">
-        <h4>ご相談時にお知らせいただきたいこと</h4>
-        <ol class="bullets">
-          <li>会社名 ／ 団体名</li>
-          <li>ご担当者名・部課名</li>
-          <li>連絡先メールアドレス・電話番号</li>
-          <li>目的・企画概要（グッズ／メディア展開などの<wbr>想定）</li>
-          <li>その<wbr>他備考</li>
-        </ol>
-        <p style="margin-top:18px;">
-          お問い合わせ先：
-          <a class="contact-link" href="mailto:baku@baku-llc.co.jp" style="color:inherit;border-bottom:1px solid var(--brass);">baku@baku-llc.co.jp</a>
-        </p>
+  <section class="sec sec--2" aria-label="費用とご相談" data-reveal>
+    <div class="container">
+      <div class="grid row2">
+        <div class="a-head"><h2 class="h3 rv">費用について</h2></div>
+        <div class="a-body measure"><p class="rv">ロイヤリティと手数料は、利用の形・期間・販路の規模に応じて、個別にご相談します。</p></div>
       </div>
-    </section>
+      <div class="grid row2">
+        <div class="a-head"><h2 class="h3 rv">管理委託・商用利用のご相談</h2></div>
+        <div class="a-body measure">
+          <p class="h4 rv">ご相談時にお知らせいただきたいこと</p>
+          <ol class="numlist rv">
+            <li>会社名／団体名</li>
+            <li>ご担当者名</li>
+            <li>連絡先（メールアドレス）</li>
+            <li>目的・企画概要（グッズ／メディア展開などの想定）</li>
+            <li>時期</li>
+          </ol>
+          <p class="rv"><a class="btn btn--primary" href="/contact/">{FORM_READY ? 'お問い合わせフォームへ' : 'お問い合わせへ'} <span aria-hidden="true">→</span></a></p>
+        </div>
+      </div>
+      <nav class="pager rule-top" style="margin-top:64px;padding-top:24px" aria-label="ページ移動">
+        <a href="/business/02/">← 前の事業　システム開発</a>
+        {SHOW_ISLAND && <a class="btn" style="margin-top:0" href="/business/03/">次の事業　島の動物診療 <span aria-hidden="true">→</span></a>}
+      </nav>
+    </div>
+  </section>
 
-  </div>
-</BusinessLayout>
+  <ContactEntry heading="管理委託・商用利用のご相談を、お受けしています。" text="上の項目を、わかる範囲でお知らせください。" />
+</BaseLayout>

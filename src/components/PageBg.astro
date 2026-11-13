@@ -1,0 +1,149 @@
+---
+// 事業のページの見出しの区画に入れる、背景だけの静かな動き（2026-11-11 Fable 案・坂本さん選定）。
+//  dots    … システム開発「点の灯り」：ドット絵と同じ升目の位置に、まばらな真鍮の点が灯っては消える
+//  ripple  … IPライセンス「波紋」：見出しの後ろの一点から、筆でなぞったような真鍮の輪が広がって薄れる
+//  moonroad… 島の動物診療「月の道」：月から海へ落ちる細い帯の中で、金の粒が水面のように明滅する
+// 共通：1ページ1色・濃さは最大0.35（見出しの文字の後ろは半分）・瑞雲と事業の絵の上には描かない・
+//       端末で動きを減らす設定の人には最初の1コマで止める。
+interface Props { kind: 'dots' | 'ripple' | 'moonroad' }
+const { kind } = Astro.props;
+---
+<canvas class="page-bg" data-kind={kind} aria-hidden="true"></canvas>
+<script is:inline>
+  (function () {
+    var c = document.querySelector('.page-bg');
+    if (!c || c.dataset.on) return; c.dataset.on = '1';
+    var sec = c.parentElement, kind = c.dataset.kind, g = c.getContext('2d');
+    var root = document.documentElement;
+    var still = matchMedia('(prefers-reduced-motion: reduce)').matches || root.dataset.motion === 'off';
+    var BRASS = '201,168,106';
+    var W = 0, H = 0, dpr = 1, avoid = [], text = [], items = [], t0 = performance.now(), raf = 0, vis = true;
+    function R(a, b) { return a + Math.random() * (b - a); }
+    function rel(el) { var r = el.getBoundingClientRect(), s = sec.getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; }
+    function inBox(x, y, b, p) { return x > b.x - p && x < b.x + b.w + p && y > b.y - p && y < b.y + b.h + p; }
+    function blocked(x, y) { for (var i = 0; i < avoid.length; i++) if (inBox(x, y, avoid[i], 12)) return true; return false; }
+    function fit() {
+      dpr = Math.min(devicePixelRatio || 1, 2); W = sec.clientWidth; H = sec.clientHeight;
+      c.width = Math.round(W * dpr); c.height = Math.round(H * dpr);
+      avoid = Array.prototype.map.call(sec.querySelectorAll('.cloud, .fig-wrap svg, .fig-wrap img'), rel);
+      text = Array.prototype.map.call(sec.querySelectorAll('h1, .lead, .note, .crumbs'), rel);
+      items = []; seed();
+    }
+    // 瑞雲と絵の場所を抜いて描く（evenodd の切り抜き）
+    function clip() {
+      g.beginPath(); g.rect(0, 0, W, H);
+      avoid.forEach(function (b) { g.rect(b.x + b.w + 12, b.y - 12, -(b.w + 24), b.h + 24); });
+      g.clip('evenodd');
+    }
+    // 見出しの文字の後ろは濃さを半分に
+    function dimText() {
+      g.globalCompositeOperation = 'destination-out'; g.fillStyle = 'rgba(0,0,0,.5)';
+      text.forEach(function (b) { g.fillRect(b.x - 16, b.y - 12, b.w + 32, b.h + 24); });
+      g.globalCompositeOperation = 'source-over';
+    }
+
+    /* ── 点の灯り ── */
+    var STEP = 24;
+    function newDot(t, mid) {
+      for (var k = 0; k < 30; k++) {
+        var x = Math.round(R(STEP, W - STEP) / STEP) * STEP, y = Math.round(R(STEP, H - STEP) / STEP) * STEP;
+        if (!blocked(x, y)) {
+          var life = R(4, 6) * 1000;
+          return { x: x, y: y, s: Math.random() < .25 ? 6 : R(3.5, 4.5), a: R(.4, .65), life: life, born: mid ? t - R(0, life) : t + R(0, 2500) };
+        }
+      }
+      return null;
+    }
+    /* ── 波紋 ── */
+    var ox = 0, oy = 0, nextRing = 0;
+    function newRing(t) { return { born: t, life: 12000, seed: R(0, 100), max: Math.hypot(Math.max(ox, W - ox), Math.max(oy, H - oy)) * .95 }; }
+    /* ── 月の道 ── */
+    var road = null;
+    function newGrain(t, mid) {
+      for (var k = 0; k < 30; k++) {
+        var v = Math.random(), y = road.y0 + (road.y1 - road.y0) * v, half = road.w0 + (road.w1 - road.w0) * v;
+        var x = road.x + R(-half, half) * Math.pow(Math.random(), .6) * (Math.random() < .5 ? -1 : 1) * .5 + R(-half, half) * .5;
+        if (!blocked(x, y)) {
+          var life = R(5, 8) * 1000;
+          return { x: x, y: y, r: R(.9, 1.9), a: R(.18, .35), life: life, ph: R(0, 6.28), born: mid ? t - R(0, life) : t + R(0, 3000) };
+        }
+      }
+      return null;
+    }
+
+    function seed() {
+      var t = performance.now(), i, n;
+      if (kind === 'dots') {
+        n = Math.max(30, Math.min(48, Math.round(W * H / 20000)));
+        for (i = 0; i < n; i++) { var d = newDot(t, true); if (d) items.push(d); }
+      } else if (kind === 'ripple') {
+        var h = sec.querySelector('h1'); var b = h ? rel(h) : { x: W / 2, y: H / 3, w: 0, h: 0 };
+        ox = b.x + b.w / 2; oy = b.y + b.h / 2;
+        for (i = 0; i < 3; i++) { var r = newRing(t - i * 4000); items.push(r); }
+        nextRing = t + 4000;
+      } else if (kind === 'moonroad') {
+        var f = sec.querySelector('.fig-wrap svg, .fig-wrap img'); var fb = f ? rel(f) : { x: W * .3, y: H * .6, w: W * .4, h: H * .4 };
+        road = { x: fb.x + fb.w * .83, y0: 0, y1: Math.max(80, fb.y - 8), w0: 10, w1: 70 };
+        n = Math.max(30, Math.min(40, Math.round(W / 40)));
+        for (i = 0; i < n; i++) { var q = newGrain(t, true); if (q) items.push(q); }
+      }
+    }
+
+    function draw(t) {
+      g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, c.width, c.height);
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.save(); clip();
+      var i, p, k, a;
+      if (kind === 'dots') {
+        for (i = 0; i < items.length; i++) {
+          p = items[i]; k = (t - p.born) / p.life;
+          if (k >= 1) { items[i] = newDot(t, false) || p; continue; }
+          if (k < 0) continue;
+          a = p.a * Math.pow(Math.sin(Math.PI * k), 2);
+          g.fillStyle = 'rgba(' + BRASS + ',' + (a * .22).toFixed(3) + ')';
+          g.fillRect(p.x - p.s * 1.5, p.y - p.s * 1.5, p.s * 3, p.s * 3);
+          g.fillStyle = 'rgba(' + BRASS + ',' + a.toFixed(3) + ')';
+          g.fillRect(p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+        }
+      } else if (kind === 'ripple') {
+        if (t >= nextRing) { items.push(newRing(t)); nextRing = t + R(4000, 5000); }
+        items = items.filter(function (r) { return t - r.born < r.life; });
+        for (i = 0; i < items.length; i++) {
+          p = items[i]; k = (t - p.born) / p.life; if (k < 0) continue;
+          var e = 1 - Math.pow(1 - k, 3), rad = 24 + (p.max - 24) * e;
+          a = .3 * Math.pow(1 - k, 1.5) * Math.min(1, k * 6);
+          g.strokeStyle = 'rgba(' + BRASS + ',' + a.toFixed(3) + ')';
+          var N = 90;
+          for (var j = 0; j < N; j++) {
+            var a0 = j / N * 6.2832, a1 = (j + 1.15) / N * 6.2832;
+            var w = 1.1 * (.55 + .45 * Math.sin(a0 * 3 + p.seed) + .3 * Math.sin(a0 * 7 + p.seed * 2));
+            if (w <= .05) continue;
+            g.lineWidth = w; g.beginPath(); g.arc(ox, oy, rad, a0, a1); g.stroke();
+          }
+        }
+      } else if (kind === 'moonroad') {
+        for (i = 0; i < items.length; i++) {
+          p = items[i]; k = (t - p.born) / p.life;
+          if (k >= 1) { items[i] = newGrain(t, false) || p; continue; }
+          if (k < 0) continue;
+          a = p.a * Math.pow(Math.sin(Math.PI * k), 2);
+          var sx = p.x + Math.sin(t / 1400 + p.ph) * 1.5;
+          g.fillStyle = 'rgba(' + BRASS + ',' + a.toFixed(3) + ')';
+          g.beginPath(); g.arc(sx, p.y, p.r, 0, 6.2832); g.fill();
+        }
+      }
+      g.restore();
+      dimText();
+    }
+    function loop(t) { raf = 0; if (!vis) return; draw(t); raf = requestAnimationFrame(loop); }
+    fit();
+    if (still) { draw(performance.now()); return; }
+    addEventListener('resize', function () { fit(); });
+    addEventListener('load', function () { fit(); });
+    setTimeout(fit, 1500);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis && !raf) raf = requestAnimationFrame(loop); }).observe(sec);
+    }
+    raf = requestAnimationFrame(loop);
+  })();
+</script>

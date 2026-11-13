@@ -1,0 +1,10 @@
+---
+interface Props { rows: [string, string][]; caption?: string }
+const { rows, caption } = Astro.props;
+---
+<table class="facts">
+  {caption && <caption class="vh">{caption}</caption>}
+  <tbody>
+    {rows.map(([k, v]) => (<tr><th scope="row">{k}</th><td set:html={v} /></tr>))}
+  </tbody>
+</table>
